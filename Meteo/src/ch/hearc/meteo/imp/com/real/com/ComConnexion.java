@@ -4,6 +4,7 @@ package ch.hearc.meteo.imp.com.real.com;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 
+import gnu.io.CommPortIdentifier;
 import gnu.io.SerialPort;
 
 import ch.hearc.meteo.imp.com.logique.MeteoServiceCallback_I;
@@ -89,13 +90,13 @@ public class ComConnexion implements ComConnexions_I
 
 	@Override public void connect() throws Exception
 		{
-		// TODO Auto-generated method stub
+		CommPortIdentifier portId = CommPortIdentifier.getPortIdentifier(portName);
+		serialPort = (SerialPort)portId.open("MeteoService", 10000);
 
 		}
 
 	@Override public void disconnect() throws Exception
 		{
-		// TODO Auto-generated method stub
 
 		}
 
