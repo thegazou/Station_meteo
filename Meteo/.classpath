@@ -6,5 +6,10 @@
 	<classpathentry kind="lib" path="deploy/ext/clavier.jar"/>
 	<classpathentry kind="lib" path="deploy/ext/HmTimes.jar"/>
 	<classpathentry kind="lib" path="deploy/ext/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="deploy/ext/RXTXcomm.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Meteo/deploy/ext"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
