@@ -19,10 +19,10 @@ public class AfficheurServiceSimulateur implements AfficheurService_I
 	/**
 	 * n = #data to print
 	 */
-	public AfficheurServiceSimulateur(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
+	public AfficheurServiceSimulateur(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote, boolean isCentral)
 		{
 		afficheurServiceMOO = new AfficheurServiceMOO(affichageOptions, meteoServiceRemote);
-		jFrameAfficheurService = new JFrameAfficheurService(afficheurServiceMOO);
+		jFrameAfficheurService = new JFrameAfficheurService(afficheurServiceMOO, isCentral);
 		}
 
 	/*------------------------------------------------------------------*\

@@ -1,6 +1,7 @@
 
 package ch.hearc.meteo.spec.reseau;
 
+import java.rmi.NotBoundException;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -51,13 +52,15 @@ public interface RemoteAfficheurCreator_I extends Remote
 	 * 		Must be call in the PC-Local
 	 *
 	 * Inputs:
-	 *		RmiURL meteoServiceRmiURL 	: 	With this RmiURL, the  PC-Central can remotely call start/stop to manage the remote stationMeteo running on PC-Local)
+	 *		RmiURL meteoServiceRmiURL 	  : 	With this RmiURL, the  PC-Central can instanciate his display
+     *		RmiURL affichageServiceRmiURL : 	With this RmiURL, the  PC-Central can remotely call start/stop to manage the remote stationMeteo running on PC-Local
 	 *
 	 * Outputs:
 	 * 		RmiURL AfficheurService_I 	: 	With this RmiURL, the  PC-Local can remotely ask to the AfficheurService_I to print data on the remote PC-Central
 	 *
 	 * </pre>
+	 * @throws NotBoundException, RemoteException
 	 */
-	public RmiURL createRemoteAfficheurService(AffichageOptions affichageOptions, RmiURL meteoServiceRmiURL) throws RemoteException;
+	public RmiURL createRemoteAfficheurService(AffichageOptions affichageOptions, RmiURL meteoServiceRmiURL, RmiURL affichageServiceRmiURL) throws RemoteException, NotBoundException;
 
 	}

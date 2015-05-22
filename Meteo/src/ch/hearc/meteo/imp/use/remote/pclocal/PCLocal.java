@@ -62,7 +62,6 @@ public class PCLocal implements PC_I
 
 	private void server() throws MeteoServiceException, RemoteException
 		{
-		// TODO Auto-generated method stub
 
 		}
 

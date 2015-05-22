@@ -11,7 +11,7 @@ import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
  * <pre>
  * But:
  * 		L'objectif est de ne pas poluer l'implementation du AfficheurService avec la moindre trace de RMI.
- *		 En effet, le AfficheurService n'est pas forcement utilisable en reseau, et son implementation doit etre independante de cette problematique.
+ *		En effet, le AfficheurService n'est pas forcement utilisable en reseau, et son implementation doit etre independante de cette problematique.
  *
  * ou:
  * 		A utiliser sur PC Local
@@ -28,8 +28,9 @@ public interface AfficheurServiceWrapper_I extends Remote
 
 	/**
 	 * Utile pour l'update du GUI du pc-central (slider ...) de dt, a distance si slider est changé depuis pc local
+	 * @throws RemoteException
 	 */
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions);
+	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions) throws RemoteException;
 
 
 	}

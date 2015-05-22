@@ -42,7 +42,7 @@ public class AfficheurServiceWrapper implements AfficheurServiceWrapper_I
 	|*				Set				*|
 	\*------------------------------*/
 
-	@Override public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
+	@Override public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions) throws RemoteException
 		{
 		afficheurService.updateMeteoServiceOptions(meteoServiceOptions);
 		}

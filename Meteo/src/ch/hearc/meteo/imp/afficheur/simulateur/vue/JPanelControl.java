@@ -46,7 +46,6 @@ public class JPanelControl extends JPanel
 		boutonStop = new JButton("Stop");
 		boutonPause = new JToggleButton("Pause");
 
-
 		boutonPause.setToolTipText("Affichage only");
 
 		Box boxH = Box.createHorizontalBox();
@@ -72,7 +71,8 @@ public class JPanelControl extends JPanel
 		boutonStart.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					try
 						{
@@ -96,7 +96,8 @@ public class JPanelControl extends JPanel
 		boutonStop.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					try
 						{
@@ -115,7 +116,8 @@ public class JPanelControl extends JPanel
 		boutonPause.addActionListener(new ActionListener()
 			{
 
-				@Override public void actionPerformed(ActionEvent e)
+				@Override
+				public void actionPerformed(ActionEvent e)
 					{
 					afficheurServiceMOO.setPause(!afficheurServiceMOO.isPause());
 					}
@@ -124,7 +126,8 @@ public class JPanelControl extends JPanel
 		threadEtatBouton = new Thread(new Runnable()
 			{
 
-				@Override public void run()
+				@Override
+				public void run()
 					{
 					while(true)
 						{
@@ -135,7 +138,11 @@ public class JPanelControl extends JPanel
 							}
 						catch (RemoteException e)
 							{
-							e.printStackTrace();
+							//Gestion de la déconnexion à chaud
+							System.err.println("Connexion perdu avec " + afficheurServiceMOO.getTitre());
+							disableStartAndStop();
+							System.out.println("[TODO]: Mise en veille du thread de récupération.");
+
 							}
 						}
 					}
@@ -145,6 +152,7 @@ public class JPanelControl extends JPanel
 
 	private void updateEtatBouton() throws RemoteException
 		{
+
 		if (meteoServiceRemote.isRunning())
 			{
 			enableStop();
@@ -153,6 +161,7 @@ public class JPanelControl extends JPanel
 			{
 			enableStart();
 			}
+
 		}
 
 	private void enableStart()
@@ -165,6 +174,13 @@ public class JPanelControl extends JPanel
 		{
 		boutonStart.setEnabled(false);
 		boutonStop.setEnabled(true);
+		}
+
+	//Gère la déconnexion à chaud
+	private void disableStartAndStop()
+		{
+		boutonStart.setEnabled(false);
+		boutonStop.setEnabled(false);
 		}
 
 	/*------------------------------*\

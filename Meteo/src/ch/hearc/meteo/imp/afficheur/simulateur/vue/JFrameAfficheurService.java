@@ -13,10 +13,10 @@ public class JFrameAfficheurService extends JFrame
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JFrameAfficheurService(AfficheurServiceMOO afficheurServiceMOO)
+	public JFrameAfficheurService(AfficheurServiceMOO afficheurServiceMOO, boolean isCentral)
 		{
 		this.afficheurServiceMOO = afficheurServiceMOO;
-
+		this.isCentral = isCentral;
 		geometry();
 		control();
 		apparence();
@@ -33,7 +33,7 @@ public class JFrameAfficheurService extends JFrame
 
 	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
 		{
-		panelRoot.updateMeteoServiceOptions( meteoServiceOptions);
+		panelRoot.updateMeteoServiceOptions(meteoServiceOptions);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -53,13 +53,19 @@ public class JFrameAfficheurService extends JFrame
 
 	private void apparence()
 		{
-		setTitle(afficheurServiceMOO.getTitre());
+		if (isCentral)
+			{
+			setTitle("Central " + afficheurServiceMOO.getTitre());
+			}
+		else
+			{
+			setTitle(afficheurServiceMOO.getTitre());
+			}
 
 		setSize(500, 550);
 		setResizable(false);
 		setVisible(true);
 		}
-
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
@@ -67,7 +73,7 @@ public class JFrameAfficheurService extends JFrame
 
 	// Inputs
 	private AfficheurServiceMOO afficheurServiceMOO;
-
+	private boolean isCentral;
 	// Tools
 	private JPanelRoot panelRoot;
 
