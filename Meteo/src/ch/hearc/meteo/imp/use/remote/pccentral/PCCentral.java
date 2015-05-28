@@ -39,7 +39,7 @@ public class PCCentral implements PC_I
 			}
 		catch (RemoteException e)
 			{
-			// TODO Auto-generated catch block
+			System.err.println("La connexion avec l'hôte est impossible");
 			e.printStackTrace();
 			}
 		}

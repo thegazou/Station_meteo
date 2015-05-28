@@ -161,7 +161,6 @@ public class JPanelControl extends JPanel
 			{
 			enableStart();
 			}
-
 		}
 
 	private void enableStart()
@@ -181,6 +180,17 @@ public class JPanelControl extends JPanel
 		{
 		boutonStart.setEnabled(false);
 		boutonStop.setEnabled(false);
+		}
+
+	@SuppressWarnings("deprecation")
+	public void stop()
+		{
+		threadEtatBouton.stop();
+		}
+
+	public void start()
+		{
+		threadEtatBouton.start();
 		}
 
 	/*------------------------------*\
