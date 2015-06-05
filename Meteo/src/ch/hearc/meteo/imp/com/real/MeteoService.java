@@ -110,6 +110,7 @@ public class MeteoService extends MeteoService_A
 		try
 			{
 			comConnexion.connect();
+			comConnexion.start();
 			}
 		catch (Exception e)
 			{
@@ -123,6 +124,7 @@ public class MeteoService extends MeteoService_A
 		try
 			{
 			comConnexion.disconnect();
+			comConnexion.stop();
 			}
 		catch (Exception e)
 			{
