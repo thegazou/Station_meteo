@@ -5,7 +5,6 @@ import ch.hearc.meteo.imp.com.logique.MeteoServiceCallback_I;
 import ch.hearc.meteo.imp.com.real.com.ComConnexion;
 import ch.hearc.meteo.imp.com.real.com.ComConnexions_I;
 import ch.hearc.meteo.imp.com.real.com.ComOption;
-import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulateur;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceFactory_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 
@@ -40,7 +39,7 @@ public class MeteoServiceFactory implements MeteoServiceFactory_I
 		MeteoService_I meteoService = new MeteoService(comConnexion);
 		comConnexion.setMeteoServiceCallback((MeteoServiceCallback_I)meteoService);
 
-		return new MeteoServiceSimulateur(portName);
+		return meteoService; //MeteoServiceSimulateur(portName);
 		}
 	/*------------------------------*\
 	|*				Set				*|

@@ -35,9 +35,9 @@ public class UseSimpleCom
 		{
 		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
 		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
-		MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM5");
+		MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM4");
 
-		ArrayList<String> portsList = new ArrayList<String>();
+		//ArrayList<String> portsList = new ArrayList<String>();
 
 		ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
 
@@ -46,13 +46,13 @@ public class UseSimpleCom
 
 		MeteoPortDetectionService_I meteoPortDetectionService = new MeteoPortDetectionService();
 
+//
+//		for(MeteoService_I s:meteoServiceArray)
+//			{
+//			use(s);
+//			}
 
-		for(MeteoService_I s:meteoServiceArray)
-			{
-			use(s);
-			}
-
-		//use(meteoService);
+		use(meteoService2);
 		}
 
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException
