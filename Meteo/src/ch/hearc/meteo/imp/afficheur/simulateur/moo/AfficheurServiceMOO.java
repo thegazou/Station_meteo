@@ -153,6 +153,16 @@ public class AfficheurServiceMOO
 		return this.statTemperature;
 		}
 
+	/*------------------------------*\
+	|*				Set				*|
+	\*------------------------------*/
+
+	//Permet de reconnecter la télécommande après une déconnexion à chaud
+	public void setMeteoServiceRemote(MeteoServiceWrapper_I meteoServiceRemote)
+		{
+		this.meteoServiceRemote = meteoServiceRemote;
+		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/

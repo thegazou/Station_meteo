@@ -186,7 +186,7 @@ public class UsePCLocal
 					}
 			});
 
-		threadSimulationChangementDt.start();
+		//threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
 

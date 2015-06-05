@@ -33,7 +33,7 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 
 	private RemoteAfficheurCreator() throws RemoteException
 		{
-		mapRmiURLAfficheurLocalToAfficheurCentral = new HashMap<RmiURL, AfficheurService_I>();
+		mapTitreToAfficheurCentral = new HashMap<String, RmiURL>();
 		server();
 		}
 
@@ -49,25 +49,32 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	@Override
 	public RmiURL createRemoteAfficheurService(AffichageOptions affichageOptions, RmiURL meteoServiceRmiURL, RmiURL affichageServiceRmiURL) throws RemoteException, NotBoundException
 		{
-		AfficheurServiceWrapper_I telecommandeAfficheurLocal = null;
 		MeteoServiceWrapper_I telecommandeMeteoServiceLocal = null;
-		RmiURL afficheurServicermiURL = null;
-		AfficheurService_I afficheurCentral;
-		//Connection de la télécommande à l'affichage local
-		telecommandeAfficheurLocal = (AfficheurServiceWrapper_I)RmiTools.connectionRemoteObject(affichageServiceRmiURL);
+		RmiURL afficheurCentralRmiURL = null;
+		AfficheurService_I afficheurCentral = null;
 		//Connection de la télécommande au service météo local
 		telecommandeMeteoServiceLocal = (MeteoServiceWrapper_I)RmiTools.connectionRemoteObject(meteoServiceRmiURL);
 		//[TODO]Test si la demande vient d'un service connu
+		if (mapTitreToAfficheurCentral.containsKey(affichageOptions.getTitre()))
+			{
+			//Reconnexion de la télécommande sur la station météo
 
-		//Création d'un affichage central à l'aide de la télécommande sur le service météo local
-		afficheurCentral = createAfficheurService(affichageOptions, telecommandeMeteoServiceLocal);
+			//Assignation du rmiUrl de l'affichage central
+			afficheurCentralRmiURL = mapTitreToAfficheurCentral.get(affichageOptions.getTitre());
 
-		//Partage  de l'affichage central.
-		afficheurServicermiURL = rmiUrl();
-		AfficheurServiceWrapper_I afficheurCentralWrapper = new AfficheurServiceWrapper(afficheurCentral);
-		RmiTools.shareObject(afficheurCentralWrapper, afficheurServicermiURL);
-
-		return afficheurServicermiURL; // Retourner le RMI-ID pour une connection distante sur le serveur d'affichage
+			}
+		else
+			{
+			//Création d'un affichage central à l'aide de la télécommande sur le service météo local
+			afficheurCentral = createAfficheurService(affichageOptions, telecommandeMeteoServiceLocal);
+			//Partage  de l'affichage central.
+			afficheurCentralRmiURL = rmiUrl();
+			AfficheurServiceWrapper_I afficheurCentralWrapper = new AfficheurServiceWrapper(afficheurCentral);
+			RmiTools.shareObject(afficheurCentralWrapper, afficheurCentralRmiURL);
+			//Ajout de la connexion à la map
+			mapTitreToAfficheurCentral.put(affichageOptions.getTitre(), afficheurCentralRmiURL);
+			}
+		return afficheurCentralRmiURL; // Retourner le RMI-ID pour une connection distante sur le serveur d'affichage
 		}
 
 	/*------------------------------*\
@@ -125,8 +132,8 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	// Tools
 
 	private static RemoteAfficheurCreator_I INSTANCE = null;
+	private static Map<String, RmiURL> mapTitreToAfficheurCentral;
 
-	private static Map<RmiURL, AfficheurService_I> mapRmiURLAfficheurLocalToAfficheurCentral;
 	// Tools final
 	private static final String PREFIXE = "AFFICHEUR_SERVICE";
 
