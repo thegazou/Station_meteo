@@ -1,14 +1,16 @@
 
 package ch.hearc.meteo.imp.use.local;
 
-import ch.hearc.meteo.imp.com.real.MeteoService;
-import ch.hearc.meteo.imp.com.real.com.ComConnexion;
-import ch.hearc.meteo.imp.com.real.com.ComOption;
+import java.util.ArrayList;
+
+import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
+import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
 import ch.hearc.meteo.spec.com.meteo.listener.MeteoListener_I;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
+import ch.hearc.meteo.spec.com.port.MeteoPortDetectionService_I;
 
 public class UseSimpleCom
 	{
@@ -32,11 +34,25 @@ public class UseSimpleCom
 	public static void main() throws MeteoServiceException
 		{
 		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
-		ComOption comOption = new ComOption();
-		ComConnexion comConnexion = new ComConnexion("COM4", comOption);
-		MeteoService_I meteoServiceReal = (new MeteoService(comConnexion));
+		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
+		MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM5");
+
+		ArrayList<String> portsList = new ArrayList<String>();
+
+		ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
+
+		//meteoServiceArray.add(meteoService1);
+		meteoServiceArray.add(meteoService2);
+
+		MeteoPortDetectionService_I meteoPortDetectionService = new MeteoPortDetectionService();
+
+
+		for(MeteoService_I s:meteoServiceArray)
+			{
+			use(s);
+			}
+
 		//use(meteoService);
-		use(meteoServiceReal);
 		}
 
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException
@@ -46,23 +62,26 @@ public class UseSimpleCom
 		meteoService.addMeteoListener(new MeteoListener_I()
 			{
 
-				@Override public void temperaturePerformed(MeteoEvent event)
+				@Override
+				public void temperaturePerformed(MeteoEvent event)
 					{
 					System.out.println(event);
 					}
 
-				@Override public void pressionPerformed(MeteoEvent event)
+				@Override
+				public void pressionPerformed(MeteoEvent event)
 					{
 					System.out.println(event);
 					}
 
-				@Override public void altitudePerformed(MeteoEvent event)
+				@Override
+				public void altitudePerformed(MeteoEvent event)
 					{
 					System.out.println(event);
 					}
 			});
 
-		//scenario(meteoService); // exemple!
+		scenario(meteoService); // exemple!
 		}
 
 	/*------------------------------------------------------------------*\
@@ -77,22 +96,25 @@ public class UseSimpleCom
 	 */
 	private static void scenario(MeteoService_I meteoService) throws MeteoServiceException
 		{
-		MeteoServiceOptions meteoServiceOptions1 = new MeteoServiceOptions(800, 1000, 1200);
+		//MeteoServiceOptions meteoServiceOptions1 = new MeteoServiceOptions(800, 1000, 1200);
 		MeteoServiceOptions meteoServiceOptions2 = new MeteoServiceOptions(100, 100, 100);
 
-		for(int i = 1; i <= 2; i++)
-			{
-			meteoService.start(meteoServiceOptions1);
-			meteoService.start(meteoServiceOptions2);
-			sleep(3000);
-			meteoService.stop();
-
-			sleep(3000);
-			}
-
-		meteoService.disconnect();
-		sleep(100);
+		//meteoService.start(meteoServiceOptions1);
 		meteoService.start(meteoServiceOptions2);
+
+		//		for(int i = 1; i <= 2; i++)
+		//			{
+		//			meteoService.start(meteoServiceOptions1);
+		//			meteoService.start(meteoServiceOptions2);
+		//			sleep(3000);
+		//			meteoService.stop();
+		//
+		//			sleep(3000);
+		//			}
+		//
+		//		meteoService.disconnect();
+		//		sleep(100);
+		//		meteoService.start(meteoServiceOptions2);
 		}
 
 	private static void sleep(long delayMS)
