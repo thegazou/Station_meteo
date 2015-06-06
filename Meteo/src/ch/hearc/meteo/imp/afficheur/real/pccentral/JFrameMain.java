@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -7,7 +7,6 @@ import java.awt.GridLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
@@ -45,14 +44,6 @@ public class JFrameMain extends JFrame implements AfficheurService_I
 
 		mapPanel= new JPanelMap(panelDefault);
 		panelMap.add(mapPanel, BorderLayout.CENTER);
-
-		JPanel panelMenu = new JPanel();
-		getContentPane().add(panelMenu, BorderLayout.NORTH);
-		panelMenu.setLayout(new BorderLayout(0, 0));
-
-		JToolBar toolBarMenu = new JToolBar();
-		toolBarMenu.setFloatable(false);
-		panelMenu.add(toolBarMenu, BorderLayout.NORTH);
 
 		mapPanel.setMapsPoints("Londre");
 		mapPanel.setMapsPoints("Neuch");

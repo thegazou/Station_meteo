@@ -1,6 +1,7 @@
 
 package ch.hearc.meteo.imp.afficheur.real;
 
+import ch.hearc.meteo.imp.afficheur.real.pccentral.JFrameMain;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;

@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.FlowLayout;
 import java.util.Map;
@@ -17,14 +17,16 @@ public class JPanelDefault extends JPanel implements AfficheurService_I
 
 	public JPanelDefault()
 		{
-		tabPanelMini = new JPanelMini[6];
+
 		setLayout(new FlowLayout());
 
 		}
 
 	public void update(Map<String, GeoPosition> mapspoint)
 		{
+
 		Map<String, GeoPosition> map = mapspoint;
+		tabPanelMini = new JPanelMini[map.size()];
 		removeAll();
 		revalidate();
 		repaint();

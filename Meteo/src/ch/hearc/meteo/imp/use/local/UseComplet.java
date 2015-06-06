@@ -1,6 +1,10 @@
 
 package ch.hearc.meteo.imp.use.local;
 
+//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+//import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
+//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
 import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
 import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
@@ -36,9 +40,25 @@ public class UseComplet
 
 	public static void main() throws MeteoServiceException
 		{
-		String portName = "COM1";
-		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(portName);
-		use(meteoService);
+		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
+		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
+		//MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM5");
+		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM4");
+		//MeteoService_I meteoService1 = (new MeteoServiceSimulatorFactory()).create("COM5");
+		//MeteoService_I meteoService2 = (new MeteoServiceSimulatorFactory()).create("COM6");
+		//ArrayList<String> portsList = new ArrayList<String>();
+		//ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
+		//meteoServiceArray.add(meteoService);
+		//meteoServiceArray.add(meteoService1);
+		//meteoServiceArray.add(meteoService2);
+		//for(MeteoService_I s:meteoServiceArray)
+					//{
+					use(meteoService);
+					//}
+
+		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(portName);
+		/*MeteoService_I meteoService = (new MeteoServiceFactory()).create("COM5");*/
+		//use(meteoService);
 		}
 
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException
@@ -55,6 +75,8 @@ public class UseComplet
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
 		//AfficheurService_I afficheurService = (new AfficheurSimulateurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
+		//AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnCentralPC(affichageOptions, meteoServiceRemote)
+
 		use(meteoService, afficheurService1);
 		}
 
@@ -66,20 +88,23 @@ public class UseComplet
 		meteoService.addMeteoListener(new MeteoAdapter()
 			{
 
-				@Override public void temperaturePerformed(MeteoEvent event)
+				@Override
+				public void temperaturePerformed(MeteoEvent event)
 					{
 					afficheurService.printTemperature(event);
 					}
 
-								@Override public void altitudePerformed(MeteoEvent event)
-								{
-									afficheurService.printAltitude(event);
-									}
+				@Override
+				public void altitudePerformed(MeteoEvent event)
+					{
+					afficheurService.printAltitude(event);
+					}
 
-								@Override public void pressionPerformed(MeteoEvent event)
-									{
-									afficheurService.printPression(event);
-									}
+				@Override
+				public void pressionPerformed(MeteoEvent event)
+					{
+					afficheurService.printPression(event);
+					}
 
 			});
 
@@ -87,7 +112,8 @@ public class UseComplet
 		Thread threadSimulationChangementDt = new Thread(new Runnable()
 			{
 
-				@Override public void run()
+				@Override
+				public void run()
 					{
 					double x = 0;
 					double dx = Math.PI / 10;
@@ -112,7 +138,8 @@ public class UseComplet
 		Thread threadPoolingOptions = new Thread(new Runnable()
 			{
 
-				@Override public void run()
+				@Override
+				public void run()
 					{
 
 					while(true)

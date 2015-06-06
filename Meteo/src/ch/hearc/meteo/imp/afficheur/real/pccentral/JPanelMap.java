@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
