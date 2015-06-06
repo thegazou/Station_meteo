@@ -11,5 +11,10 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="Meteo/deploy/ext"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/raphael.schaffo/HE-ARC/MODULE NIVEAU II/2014-2015/Module Programmation/JAVA/WCoursProjet/Station_meteo/Meteo/deploy/ext/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/raphael.schaffo/HE-ARC/MODULE NIVEAU II/2014-2015/Module Programmation/JAVA/WCoursProjet/Station_meteo/Meteo/deploy/ext/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/raphael.schaffo/HE-ARC/MODULE NIVEAU II/2014-2015/Module Programmation/JAVA/WCoursProjet/Station_meteo/Meteo/deploy/ext/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/raphael.schaffo/HE-ARC/MODULE NIVEAU II/2014-2015/Module Programmation/JAVA/WCoursProjet/Station_meteo/Meteo/deploy/ext/jxmapviewer2-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/raphael.schaffo/HE-ARC/MODULE NIVEAU II/2014-2015/Module Programmation/JAVA/WCoursProjet/Station_meteo/Meteo/deploy/ext/jxmapviewer2-master.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
