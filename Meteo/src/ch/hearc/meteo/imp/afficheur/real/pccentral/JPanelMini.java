@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -14,17 +14,18 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
+import ch.hearc.meteo.imp.afficheur.real.station.JFrameMeteo;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
-public class JPanelMini extends JPanel  implements AfficheurService_I
+public class JPanelMini extends JPanel implements AfficheurService_I
 	{
 
 	public JPanelMini(int ID, String Name)
 		{
-		wait=0;
+		wait = 0;
 		addMouseListener(new MouseListener()
 			{
 
@@ -61,9 +62,8 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 					{
 					// TODO Auto-generated method stub
 
-					meteo=new JFrameMeteo(meteoService);
+					meteo = new JFrameMeteo();
 					wait++;
-
 
 					}
 			});
@@ -73,7 +73,9 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 		setForeground(Color.blue);
 		addMouseListener(new MouseAdapter()
 			{
+
 				Boolean swap = false;
+
 				@Override
 				public void mousePressed(MouseEvent e)
 					{
@@ -96,17 +98,17 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 		setLayout(new GridLayout(0, 1, 0, 0));
 
 		/*Information Label*/
-		JLabel lblLocation = new JLabel("ID : " + Name);
-		lblLocation.setFont(new Font("Calibri", Font.PLAIN, 10));
-		add(lblLocation);
+		JLabel labelID = new JLabel("ID : " + Name);
+		labelID.setFont(new Font("Calibri", Font.PLAIN, 10));
+		add(labelID);
 
-		JLabel lblTemperature = new JLabel("Port : ");
-		lblTemperature.setFont(new Font("Calibri", Font.PLAIN, 10));
-		add(lblTemperature);
+		JLabel labelPort = new JLabel("Port : ");
+		labelPort.setFont(new Font("Calibri", Font.PLAIN, 10));
+		add(labelPort);
 
-		JLabel lblPression = new JLabel("State : Connected");
-		lblPression.setFont(new Font("Calibri", Font.PLAIN, 10));
-		add(lblPression);
+		JLabel labelState = new JLabel("State : Connected");
+		labelState.setFont(new Font("Calibri", Font.PLAIN, 10));
+		add(labelState);
 		}
 
 	public Boolean isSelected()
@@ -120,7 +122,7 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 	public void printPression(MeteoEvent event)
 		{
 		// TODO Auto-generated method stub
-		if(wait!=0)
+		if (wait != 0)
 			{
 			meteo.printPression(event);
 			}
@@ -131,7 +133,7 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 	public void printAltitude(MeteoEvent event)
 		{
 		// TODO Auto-generated method stub
-		if(wait!=0)
+		if (wait != 0)
 			{
 			meteo.printAltitude(event);
 			}
@@ -142,7 +144,7 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 	public void printTemperature(MeteoEvent event)
 		{
 		// TODO Auto-generated method stub
-		if(wait!=0)
+		if (wait != 0)
 			{
 			meteo.printTemperature(event);
 			}
@@ -155,6 +157,7 @@ public class JPanelMini extends JPanel  implements AfficheurService_I
 		// TODO Auto-generated method stub
 
 		}
+
 	private MeteoService_I meteoService;
 	private JFrameMeteo meteo;
 	private int wait;

@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -29,11 +29,8 @@ import org.jxmapviewer.viewer.WaypointPainter;
 
 import ch.hearc.meteo.imp.afficheur.real.jxmap.FancyWaypointRenderer;
 import ch.hearc.meteo.imp.afficheur.real.jxmap.MyWaypoint;
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
-public class JPanelMap extends JPanel implements AfficheurService_I
+public class JPanelMap extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
@@ -51,35 +48,6 @@ public class JPanelMap extends JPanel implements AfficheurService_I
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
-
-	@Override
-	public void printPression(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-		panelDefault.printPression(event);
-
-		}
-
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-		panelDefault.printAltitude(event);
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-		panelDefault.printTemperature(event);
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
 
 	public void updateAll()
 		{

@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.station;
 
 import java.awt.Dimension;
 import java.awt.Font;

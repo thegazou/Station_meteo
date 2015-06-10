@@ -1,12 +1,17 @@
 
-package ch.hearc.meteo.imp.use.local;
+package ch.hearc.meteo.imp.afficheur.real.pclocal;
 
-//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
-//import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
-//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
-//import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+import java.awt.Dimension;
+import java.awt.GridLayout;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+
 import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
-import ch.hearc.meteo.imp.afficheur.real.pclocal.JFramePCLocal;
+import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
 import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
@@ -20,52 +25,20 @@ import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
 import com.bilat.tools.reseau.rmi.RmiTools;
 
-public class UseComplet
+public class JPanelChoice extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
-	|*							Methodes Public							*|
+	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public static void main(String[] args)
+	public JPanelChoice(MeteoPortDetectionService meteoPortDetectionService )
 		{
-		try
-			{
-			main();
-			}
-		catch (MeteoServiceException e)
-			{
-			e.printStackTrace();
-			}
+		this.meteoPortDetectionService=meteoPortDetectionService;
+		geometry();
+		control();
+		appearance();
 		}
-
-	public static void main() throws MeteoServiceException
-		{
-
-		//JFrameMain mainPrincipale= new JFrameMain();
-		JFramePCLocal pcLocale= new JFramePCLocal(/*objet lukas*/);
-
-		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
-		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
-		//MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM5");
-		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM4");
-		//MeteoService_I meteoService1 = (new MeteoServiceSimulatorFactory()).create("COM5");
-		//MeteoService_I meteoService2 = (new MeteoServiceSimulatorFactory()).create("COM6");
-		//ArrayList<String> portsList = new ArrayList<String>();
-		//ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
-		//meteoServiceArray.add(meteoService);
-		//meteoServiceArray.add(meteoService1);
-		//meteoServiceArray.add(meteoService2);
-		//for(MeteoService_I s:meteoServiceArray)
-					//{
-					use(meteoService);
-					//}
-
-		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(portName);
-		/*MeteoService_I meteoService = (new MeteoServiceFactory()).create("COM5");*/
-		//use(meteoService);
-		}
-
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException
 		{
 		// Service Meteo
@@ -75,19 +48,11 @@ public class UseComplet
 
 		// Service Affichage
 		MeteoServiceWrapper_I meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
-
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		//AfficheurService_I afficheurService = (new AfficheurSimulateurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
-		//AfficheurService_I afficheurService11 = (new AfficheurSimulatorFactoryT()).createOnCentralPC(affichageOption, meteoServiceWrapper);
-
 		use(meteoService, afficheurService1);
 		}
-
-	/**
-	 * Liason entre les deux services d'affichage : MeteoService_I et AfficheurService_I
-	 */
 	public static void use(final MeteoService_I meteoService, final AfficheurService_I afficheurService) throws MeteoServiceException
 		{
 		meteoService.addMeteoListener(new MeteoAdapter()
@@ -162,7 +127,6 @@ public class UseComplet
 		threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
-
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
@@ -178,5 +142,134 @@ public class UseComplet
 			e.printStackTrace();
 			}
 		}
-	}
 
+	private void geometry()
+		{
+			// JComponent : Instanciation
+			multipleCom= new JButton("Use all station");
+			defaultCom= new JButton("Use default station");
+			defaultCom.addMouseListener(new MouseListener()
+				{
+					@Override
+					public void mouseClicked(MouseEvent e)
+						{
+						// TODO Auto-generated method stub
+						MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
+						try
+							{
+							use(meteoService);
+							}
+						catch (MeteoServiceException e1)
+							{
+							e1.printStackTrace();
+							}
+						}
+
+					@Override
+					public void mouseEntered(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mouseExited(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mousePressed(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mouseReleased(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+				});
+			multipleCom.addMouseListener(new MouseListener()
+				{
+
+					@Override
+					public void mouseReleased(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mousePressed(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mouseExited(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mouseEntered(MouseEvent arg0)
+						{
+						// TODO Auto-generated method stub
+
+						}
+
+					@Override
+					public void mouseClicked(MouseEvent arg0)
+						{
+						new JFramePCLocalManuel(meteoPortDetectionService);
+
+						}
+				});
+			// Layout : Specification
+			{
+		    GridLayout gl = new GridLayout();
+			gl.setColumns(1);
+			gl.setRows(2);
+			gl.setHgap(15);
+			gl.setVgap(15);
+			this.setLayout(gl);
+			add(multipleCom);
+			add(defaultCom);
+
+			// flowlayout.setHgap(20);
+			// flowlayout.setVgap(20);
+			}
+
+		// JComponent : add
+
+		}
+
+	private void control()
+		{
+		// rien
+		}
+
+	private void appearance()
+		{
+		// rien
+		this.setSize(new Dimension(200,100));
+		this.setPreferredSize(new Dimension(200,100));
+		this.setBorder(BorderFactory.createTitledBorder(""));
+		}
+
+	/*------------------------------------------------------------------*\
+	|*							Attributs Private						*|
+	\*------------------------------------------------------------------*/
+	JButton defaultCom;
+	JButton multipleCom;
+
+	// Tools
+	private MeteoPortDetectionService meteoPortDetectionService;
+
+	}

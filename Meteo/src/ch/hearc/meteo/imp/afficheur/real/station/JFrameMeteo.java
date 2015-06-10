@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.station;
 
 import java.awt.BorderLayout;
 
@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
 
@@ -19,9 +18,9 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JFrameMeteo(MeteoService_I meteoService)
+	public JFrameMeteo()
 		{
-		this.meteoService=meteoService;
+
 		geometry();
 		control();
 		appearance();
@@ -31,6 +30,9 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	\*------------------------------------------------------------------*/
 	@Override public void printPression(MeteoEvent event)
 		{
+
+		nom=event.getSource().toString();
+		setNom();
 		stationPressiongraph.printPression(event);
 		stationInformation.printPression(event);
 		}
@@ -103,8 +105,11 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 		setSize(1000, 650);
 		setLocationRelativeTo(null); // frame centrer
 		setVisible(true); // last!
-
 		}
+	private void setNom()
+	{
+	setTitle(nom);
+	}
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
@@ -117,9 +122,8 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	private JPanelInformationStation stationInformation;
 	private JPanelMeteoGraphe stationMeteoGraph;
 	private JPanelMeteoGrapheVisual stationMeteoGraphVisual;
+	private String nom;
 
-	// Input
-	private MeteoService_I meteoService;
 
 	}
 

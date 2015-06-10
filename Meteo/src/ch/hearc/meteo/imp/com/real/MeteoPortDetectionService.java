@@ -135,4 +135,5 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+	private List<String> supplierNames;
 	}
