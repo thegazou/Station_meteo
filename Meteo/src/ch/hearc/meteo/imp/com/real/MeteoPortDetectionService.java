@@ -2,7 +2,6 @@
 package ch.hearc.meteo.imp.com.real;
 
 import java.util.Enumeration;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -35,7 +34,6 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 			{
 			CommPortIdentifier portIdentifier = portEnum.nextElement();
 			listPortSerie.add(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
-			//System.out.println(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
 			}
 		return listPortSerie;
 		}
@@ -44,7 +42,7 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	public boolean isStationMeteoAvailable(String portName, long timeoutMS)
 		{
 		// TODO Auto-generated method stub
-		return false;
+		return true;
 		}
 
 	/**
@@ -67,28 +65,24 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	public List<String> findListPortMeteo(List<String> listPortExcluded)
 		{
 
-		List<String> listPortsCom = new LinkedList<String>();
-		listPortsCom = findListPortSerie();
-		for(String s:listPortsCom)
-			{
-			//System.out.println("MeteoPortDetectionService.findListPortMeteo: " + s);
-			}
+		//List<String> listPortsCom = new LinkedList<String>();
+		List<String> listPortsCom = findListPortSerie();
 
 		listPortsCom.removeAll(listPortExcluded);
 
-		List<String> listPortComMeteoAvailable = new LinkedList<String>();
-
-		Iterator<String> it = listPortsCom.iterator();
-		while(it.hasNext())
+//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
+		for(String portCom:listPortsCom)
 			{
-			String portCom = it.next();
-			if (isStationMeteoAvailable(portCom, 5000))
+//			System.out.println("MeteoPortDetectionService.findListPortMeteo: " + portCom);
+			if (!isStationMeteoAvailable(portCom, 5000))
 				{
-				listPortComMeteoAvailable.add(portCom);
+				System.out.println("remove");
+				listPortsCom.remove(portCom);
 				}
 			}
+//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
 
-		return listPortComMeteoAvailable;
+		return listPortsCom;
 		}
 
 	@Override

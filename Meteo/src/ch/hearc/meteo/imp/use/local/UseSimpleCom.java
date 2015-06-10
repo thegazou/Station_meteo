@@ -42,7 +42,7 @@ public class UseSimpleCom
 		//meteoServiceArray.add(meteoService2);
 
 		MeteoPortDetectionService_I meteoPortDetectionService = new MeteoPortDetectionService();
-		System.out.println(meteoPortDetectionService.findListPortSerie());
+		//System.out.println(meteoPortDetectionService.findListPortSerie());
 		System.out.println(meteoPortDetectionService.findListPortMeteo());
 
 		//
