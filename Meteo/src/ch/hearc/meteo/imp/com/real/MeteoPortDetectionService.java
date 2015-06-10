@@ -1,6 +1,7 @@
 
 package ch.hearc.meteo.imp.com.real;
 
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 
@@ -54,8 +55,12 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	@Override
 	public List<String> findListPortMeteo()
 		{
-		// TODO Auto-generated method stub
-		return null;
+			supplierNames = new ArrayList<String>();
+			supplierNames.add("sup1");
+			supplierNames.add("sup2");
+			supplierNames.add("sup3");
+
+			return supplierNames;
 		}
 
 	/*------------------------------*\
@@ -97,4 +102,5 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+	private List<String> supplierNames;
 	}
