@@ -1,10 +1,7 @@
 
 package ch.hearc.meteo.imp.use.local;
 
-import java.util.ArrayList;
-
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
-import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
@@ -35,24 +32,26 @@ public class UseSimpleCom
 		{
 		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
 		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
-		MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM4");
+		//MeteoService_I meteoService2 = (new MeteoServiceFactory()).create("COM4");
 
 		//ArrayList<String> portsList = new ArrayList<String>();
 
-		ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
+		//ArrayList<MeteoService_I> meteoServiceArray = new ArrayList<MeteoService_I>();
 
 		//meteoServiceArray.add(meteoService1);
-		meteoServiceArray.add(meteoService2);
+		//meteoServiceArray.add(meteoService2);
 
 		MeteoPortDetectionService_I meteoPortDetectionService = new MeteoPortDetectionService();
+		System.out.println(meteoPortDetectionService.findListPortSerie());
+		System.out.println(meteoPortDetectionService.findListPortMeteo());
 
-//
-//		for(MeteoService_I s:meteoServiceArray)
-//			{
-//			use(s);
-//			}
+		//
+		//		for(MeteoService_I s:meteoServiceArray)
+		//			{
+		//			use(s);
+		//			}
 
-		use(meteoService2);
+		//use(meteoService2);
 		}
 
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException

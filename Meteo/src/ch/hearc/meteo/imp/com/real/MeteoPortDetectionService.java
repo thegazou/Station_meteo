@@ -2,6 +2,8 @@
 package ch.hearc.meteo.imp.com.real;
 
 import java.util.Enumeration;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 import gnu.io.CommPortIdentifier;
@@ -23,18 +25,19 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	|*			  Static			*|
 	\*------------------------------*/
 
-
 	@Override
 	public List<String> findListPortSerie()
 		{
 
 		Enumeration<CommPortIdentifier> portEnum = CommPortIdentifier.getPortIdentifiers();
+		List<String> listPortSerie = new LinkedList<String>();
 		while(portEnum.hasMoreElements())
 			{
 			CommPortIdentifier portIdentifier = portEnum.nextElement();
-			System.out.println(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
+			listPortSerie.add(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
+			//System.out.println(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
 			}
-		return null;
+		return listPortSerie;
 		}
 
 	@Override
@@ -44,18 +47,54 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 		return false;
 		}
 
+	/**
+	 * Contraintes :
+	 * 		(C1) Doit refermer les ports!
+	 * 		(C2) Doit être safe (dans le sens ou un port com peut contenir un hardware sensible qui ne doit impérativement pas être déranger, ie aucune tentative d'ouverture de port autorisée)
+	 *
+	 * Implementation conseil:
+	 * 		(I1) Utiliser la méthode  isStationMeteoAvailable(String portName)
+	 * 		(I2) Pour satisfaire la contrainte C2
+	 * 				Step1 : Utiliser findPortSerie (ci-dessus)																						---> listPortCom
+	 * 				Step2 :	Soustraction de listPortExcluded à listPortCom	(via removeAll)															---> listPortCom (updater)
+	 * 				Step3 : Instancien listPortComMeteoAvailable																					---> listPortComMeteoAvailable	(vide)
+	 * 				Step4 :	Parcourir listPortCom et utiliser isStationMeteoAvailable (ci-dessous) pour peupler listPortComMeteoAvailable			---> listPortComMeteoAvailable
+	 *
+	 *  Output:
+	 *  	Return la liste des ports surlesquels sont branchés une station météo (non encore utilisée) , except listPortExcluded
+	 */
 	@Override
 	public List<String> findListPortMeteo(List<String> listPortExcluded)
 		{
-		// TODO Auto-generated method stub
+
+		List<String> listPortsCom = new LinkedList<String>();
+		listPortsCom = findListPortSerie();
+		for(String s:listPortsCom)
+			{
+			//System.out.println("MeteoPortDetectionService.findListPortMeteo: " + s);
+			}
+
+		listPortsCom.removeAll(listPortExcluded);
+
+		List<String> listPortComMeteoAvailable = new LinkedList<String>();
+
+		Iterator<String> it = listPortsCom.iterator();
+		while(it.hasNext())
+			{
+			String portCom = it.next();
+			if (isStationMeteoAvailable(portCom, 5000))
+				{
+				listPortComMeteoAvailable.add(portCom);
+				}
+			}
+
 		return null;
 		}
 
 	@Override
 	public List<String> findListPortMeteo()
 		{
-		// TODO Auto-generated method stub
-		return null;
+		return findListPortMeteo(new LinkedList<String>());
 		}
 
 	/*------------------------------*\
@@ -92,7 +131,6 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 				return "unknown type";
 			}
 		}
-
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
