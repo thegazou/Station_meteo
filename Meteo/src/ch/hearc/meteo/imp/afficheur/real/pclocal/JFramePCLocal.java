@@ -33,7 +33,6 @@ public class JFramePCLocal extends JFrame
 		choice = new JPanelChoice(meteoPortDetectionService);
 		// JComponent : add
 		add(choice);
-		//add(TODO,BorderLayout.CENTER);
 		}
 
 	private void control()

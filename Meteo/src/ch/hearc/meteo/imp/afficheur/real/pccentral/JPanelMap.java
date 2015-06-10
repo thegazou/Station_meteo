@@ -66,14 +66,15 @@ public class JPanelMap extends JPanel
 	public void setMapsPoints(String ID)
 		{
 		Random randomGenerator = new Random();
-		int one = randomGenerator.nextInt(50);
-		int two = randomGenerator.nextInt(50);
+		int one = randomGenerator.nextInt(70);
+		int two = randomGenerator.nextInt(70);
 
-		int four = randomGenerator.nextInt(50);
-		int five = randomGenerator.nextInt(50);
+		int four = randomGenerator.nextInt(70);
+		int five = randomGenerator.nextInt(70);
 
 		mapspoint.put(ID, new GeoPosition(one, two, 0, four, five, 0));
 		waypoints = this.peupler();
+		panelDefault.setStringPort(ID);
 		updateAll();
 		mapViewer.setZoom(10);
 		mapViewer.setAddressLocation(new GeoPosition(one, two, 0, four, five, 0));
@@ -93,11 +94,11 @@ public class JPanelMap extends JPanel
 			Entry<String, GeoPosition> myvalue = iteratormap.next();
 			if (i == 1)
 				{
-				waypoints.add(new MyWaypoint(i + 1 + "", Color.BLUE, myvalue.getValue()));
+				waypoints.add(new MyWaypoint(i + 1 + "", Color.BLACK, myvalue.getValue()));
 				}
 			else
 				{
-				waypoints.add(new MyWaypoint(i + 1 + "", Color.GRAY, myvalue.getValue()));
+				waypoints.add(new MyWaypoint(i + 1 + "", Color.GREEN, myvalue.getValue()));
 				}
 
 			i++;

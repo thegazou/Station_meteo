@@ -12,6 +12,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
@@ -192,19 +193,18 @@ public class JFramePCLocalManuel extends JFrame
 						setMeteoService(arg0.getSource());
 						}
 
-
 				});
 			}
 
-
 		}
+
 	private void setMeteoService(Object object)
 		{
-		JButton button = (JButton) object;
+		JButton button = (JButton)object;
 		button.setVisible(false);
-		for(int i=0;i<tailleListe;i++)
+		for(int i = 0; i < tailleListe; i++)
 			{
-			if(button.getText()==comList.get(i).getText())
+			if (button.getText() == comList.get(i).getText())
 				{
 				statList.get(i).setText("Used");
 				statList.get(i).setVisible(false);
@@ -250,24 +250,25 @@ public class JFramePCLocalManuel extends JFrame
 
 	private void populate()
 		{
-		/*List<String> supplierNames = new ArrayList<String>();
-		supplierNames.add("COM1");
-		supplierNames.add("COM2");
-		supplierNames.add("COM3");
-		supplierNames.add("COM4");
-		supplierNames.add("COM5");
-		List<String> portList = supplierNames;*/
-		List<String> portList=meteoPortDetectionService.findListPortSerie();
+
+		List<String> portList = meteoPortDetectionService.findListPortMeteo();
 		System.out.println(portList);
-		String state = "connecté";
+		String state = "Connected";
 		tailleListe = portList.size();
 		// JComponent : Instanciation
 		comList = new ArrayList<JButton>();
 		statList = new ArrayList<JLabel>();
-		for(int i = 0; i < tailleListe; i++)
+		if (tailleListe != 0)
 			{
-			comList.add(new JButton(portList.get(i).toString()));
-			statList.add(new JLabel(state));
+			for(int i = 0; i < tailleListe; i++)
+				{
+				comList.add(new JButton(portList.get(i).toString()));
+				statList.add(new JLabel(state));
+				}
+			}
+		else
+			{
+			JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
 			}
 		}
 

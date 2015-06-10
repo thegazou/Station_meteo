@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
@@ -152,13 +153,13 @@ public class JPanelChoice extends JPanel
 			// JComponent : Instanciation
 			multipleCom= new JButton("Use all station");
 			defaultCom= new JButton("Use default station");
-			final List<String> portList=meteoPortDetectionService.findListPortSerie();
+			final List<String> portList=meteoPortDetectionService.findListPortMeteo();
 			defaultCom.addMouseListener(new MouseListener()
 				{
 					@Override
 					public void mouseClicked(MouseEvent e)
 						{
-						if(portList!=null){
+						if(portList.size()!=0){
 							MeteoService_I meteoService = (new MeteoServiceFactory()).create(portList.get(0).toString());
 							try
 								{
@@ -171,36 +172,28 @@ public class JPanelChoice extends JPanel
 						}
 						else
 							{
-							System.out.println("erreur");
+							JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
 							}
 						}
 
 					@Override
 					public void mouseEntered(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseExited(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mousePressed(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseReleased(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 				});
 			multipleCom.addMouseListener(new MouseListener()
@@ -209,35 +202,32 @@ public class JPanelChoice extends JPanel
 					@Override
 					public void mouseReleased(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mousePressed(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseExited(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseEntered(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 						{
+						if(portList.size()!=0){
 						new JFramePCLocalManuel(meteoPortDetectionService);
+						}
+						else{
+						JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
+						}
 
 						}
 				});

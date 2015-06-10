@@ -3,6 +3,7 @@ package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JFrame;
@@ -16,12 +17,20 @@ import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
 public class JFramePCCentrale extends JFrame
 	{
 
+	/*------------------------------------------------------------------*\
+	|*							Constructeurs							*|
+	\*------------------------------------------------------------------*/
+
 	public JFramePCCentrale()
 		{
 		geometry();
 		control();
 		appearance();
 		}
+
+	/*------------------------------------------------------------------*\
+	|*							Methodes Private						*|
+	\*------------------------------------------------------------------*/
 
 	private void geometry()
 		{
@@ -40,7 +49,9 @@ public class JFramePCCentrale extends JFrame
 
 		mapPanel = new JPanelMap(panelDefault);
 		panelMap.add(mapPanel, BorderLayout.CENTER);
-
+		stationList = new HashMap<String, MeteoService_I>();
+		af = new AffichageOptions(3, "COM5 COM6");
+		addStation(af, meteo);
 		}
 
 	private void control()
@@ -55,31 +66,34 @@ public class JFramePCCentrale extends JFrame
 		setVisible(true);
 		}
 
-	private JPanelDefault panelDefault;
-
-	/*if(mapTitreToClient.contains(affichageOptions.titre()))
-	    Client client = mapTitreToClient.getValue(affichageOptions.titre());
-	    client.setAfficheurService(telecommndeMeteoServiceLocal);
-	    client.update();
-	else
-	    Client client = new Client(affichageOptions.titre(), telecommandeMeteoServiceLocal);
-	    mapTitreToClient.add(affichageOptions.titre(),client);
-	    AffichageFactory().creatOnCentralPC(affichageOptions.titre(), telecommandeMeteoServiceLocal);*/
+	/*------------------------------------------------------------------*\
+	|*							Methodes Public							*|
+	\*------------------------------------------------------------------*/
 
 	public void addStation(AffichageOptions affichageOptions, MeteoService_I service)
 		{
 		if (stationList.containsKey(affichageOptions.getTitre()))
 			{
-			mapPanel.setMapsPoints(affichageOptions.getTitre());
-			stationList.put(affichageOptions.getTitre(), service);
+			stationList.replace(affichageOptions.getTitre(), service);
+			panelDefault.setMap(stationList);
 			}
 		else
 			{
-
+			//System.out.println("FramePrincipale: "+service.getPort());
+			stationList.put(affichageOptions.getTitre(), service);
+			mapPanel.setMapsPoints(affichageOptions.getTitre());
+			panelDefault.setMap(stationList);
 			}
 
 		}
 
+	/*------------------------------------------------------------------*\
+	|*							Attributs Private						*|
+	\*------------------------------------------------------------------*/
+
+	private JPanelDefault panelDefault;
 	private JPanelMap mapPanel;
-	private Map<String,MeteoService_I> stationList;
+	private MeteoService_I meteo;
+	private AffichageOptions af;
+	private Map<String, MeteoService_I> stationList;
 	}
