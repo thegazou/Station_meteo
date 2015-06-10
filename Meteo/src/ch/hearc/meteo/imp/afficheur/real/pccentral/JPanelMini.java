@@ -62,7 +62,7 @@ public class JPanelMini extends JPanel implements AfficheurService_I
 					{
 					// TODO Auto-generated method stub
 
-					meteo = new JFrameMeteo(meteoService);
+					meteo = new JFrameMeteo();
 					wait++;
 
 					}

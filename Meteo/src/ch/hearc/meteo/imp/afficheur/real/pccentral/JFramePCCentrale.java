@@ -3,6 +3,7 @@ package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.util.Map;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -10,18 +11,13 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
 import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
-import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
-public class JFrameMain extends JFrame implements AfficheurService_I
+public class JFramePCCentrale extends JFrame
 	{
 
-	public JFrameMain(MeteoService_I meteoService)
+	public JFramePCCentrale()
 		{
-		this.meteoService = meteoService;
 		geometry();
 		control();
 		appearance();
@@ -42,17 +38,10 @@ public class JFrameMain extends JFrame implements AfficheurService_I
 		tabbedPane.addTab("Station Information", null, panelDefault, null);
 		panelMap.setLayout(new GridLayout(0, 1, 0, 0));
 
-		mapPanel= new JPanelMap(panelDefault);
+		mapPanel = new JPanelMap(panelDefault);
 		panelMap.add(mapPanel, BorderLayout.CENTER);
 
-		mapPanel.setMapsPoints("Londre");
-		mapPanel.setMapsPoints("Neuch");
-		mapPanel.setMapsPoints("Locle");
-		mapPanel.setMapsPoints("France");
-		mapPanel.setMapsPoints("La Brevine");
-		mapPanel.setMapsPoints("star");
 		}
-
 
 	private void control()
 		{
@@ -68,37 +57,29 @@ public class JFrameMain extends JFrame implements AfficheurService_I
 
 	private JPanelDefault panelDefault;
 
-	@Override
-	public void printPression(MeteoEvent event)
+	/*if(mapTitreToClient.contains(affichageOptions.titre()))
+	    Client client = mapTitreToClient.getValue(affichageOptions.titre());
+	    client.setAfficheurService(telecommndeMeteoServiceLocal);
+	    client.update();
+	else
+	    Client client = new Client(affichageOptions.titre(), telecommandeMeteoServiceLocal);
+	    mapTitreToClient.add(affichageOptions.titre(),client);
+	    AffichageFactory().creatOnCentralPC(affichageOptions.titre(), telecommandeMeteoServiceLocal);*/
+
+	public void addStation(AffichageOptions affichageOptions, MeteoService_I service)
 		{
-		mapPanel.printPression(event);
+		if (stationList.containsKey(affichageOptions.getTitre()))
+			{
+			mapPanel.setMapsPoints(affichageOptions.getTitre());
+			stationList.put(affichageOptions.getTitre(), service);
+			}
+		else
+			{
+
+			}
+
 		}
 
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		mapPanel.printAltitude(event);
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		mapPanel.printTemperature(event);
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
-	public void add(AffichageOptions affichageOptions, MeteoServiceWrapper_I telecommandeMeteoServiceLocal)
-	{
-
-	}
-
-
-	private MeteoService_I meteoService;
 	private JPanelMap mapPanel;
-
+	private Map<String,MeteoService_I> stationList;
 	}
