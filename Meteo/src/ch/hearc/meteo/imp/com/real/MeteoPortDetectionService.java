@@ -88,7 +88,7 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 				}
 			}
 
-		return null;
+		return listPortComMeteoAvailable;
 		}
 
 	@Override
