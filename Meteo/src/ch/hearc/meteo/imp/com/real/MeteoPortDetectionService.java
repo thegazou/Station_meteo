@@ -7,6 +7,11 @@ import java.util.List;
 
 import gnu.io.CommPortIdentifier;
 
+import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
+import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
+import ch.hearc.meteo.spec.com.meteo.listener.MeteoListener_I;
+import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 import ch.hearc.meteo.spec.com.port.MeteoPortDetectionService_I;
 
 public class MeteoPortDetectionService implements MeteoPortDetectionService_I
@@ -42,8 +47,52 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	@Override
 	public boolean isStationMeteoAvailable(String portName, long timeoutMS)
 		{
-		// TODO Auto-generated method stub
-		return true;
+		isAvailable = false;
+		MeteoService_I meteoService = (new MeteoServiceFactory()).create(portName);
+
+		meteoService.addMeteoListener(new MeteoListener_I()
+			{
+
+				@Override
+				public void temperaturePerformed(MeteoEvent event)
+					{
+					isAvailable = true;
+
+					}
+
+				@Override
+				public void pressionPerformed(MeteoEvent event)
+					{
+					isAvailable = true;
+
+					}
+
+				@Override
+				public void altitudePerformed(MeteoEvent event)
+					{
+					isAvailable = true;
+
+					}
+			});
+
+		try
+			{
+			meteoService.connect();
+			meteoService.start(new MeteoServiceOptions(30, 30, 30));
+			Thread.sleep(timeoutMS);
+			meteoService.stop();
+			meteoService.disconnect();
+			}
+		catch (MeteoServiceException e)
+			{
+			isAvailable = false;
+			}
+		catch (InterruptedException e)
+			{
+			isAvailable = false;
+			}
+
+		return isAvailable;
 		}
 
 	/**
@@ -73,16 +122,16 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 
 		List<String> listPortComMeteoAvailable = new LinkedList<String>();
 
-//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
+		//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
 		for(String portCom:listPortsCom)
 			{
-//			System.out.println("MeteoPortDetectionService.findListPortMeteo: " + portCom);
+			//			System.out.println("MeteoPortDetectionService.findListPortMeteo: " + portCom);
 			if (isStationMeteoAvailable(portCom, 5000))
 				{
 				listPortComMeteoAvailable.add(portCom);
 				}
 			}
-//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
+		//		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
 
 		return listPortComMeteoAvailable;
 		}
@@ -132,4 +181,5 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 	private List<String> supplierNames;
+	boolean isAvailable;
 	}
