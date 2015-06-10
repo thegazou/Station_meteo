@@ -39,7 +39,11 @@ public class MeteoServiceFactory implements MeteoServiceFactory_I
 		MeteoService_I meteoService = new MeteoService(comConnexion);
 		comConnexion.setMeteoServiceCallback((MeteoServiceCallback_I)meteoService);
 
+<<<<<<< HEAD
 		return meteoService;
+=======
+		return meteoService; //MeteoServiceSimulateur(portName);
+>>>>>>> 2c698b199b0101742a0c916cacba81f66c3c8ad8
 		}
 	/*------------------------------*\
 	|*				Set				*|
