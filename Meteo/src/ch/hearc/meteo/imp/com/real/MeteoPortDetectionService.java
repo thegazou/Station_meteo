@@ -33,7 +33,8 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 		while(portEnum.hasMoreElements())
 			{
 			CommPortIdentifier portIdentifier = portEnum.nextElement();
-			listPortSerie.add(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
+			//listPortSerie.add(portIdentifier.getName() + " - " + getPortTypename(portIdentifier.getPortType()));
+			listPortSerie.add(portIdentifier.getName());
 			}
 		return listPortSerie;
 		}
