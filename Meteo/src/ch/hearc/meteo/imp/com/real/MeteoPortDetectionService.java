@@ -70,19 +70,20 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 
 		listPortsCom.removeAll(listPortExcluded);
 
+		List<String> listPortComMeteoAvailable = new LinkedList<String>();
+
 //		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
 		for(String portCom:listPortsCom)
 			{
 //			System.out.println("MeteoPortDetectionService.findListPortMeteo: " + portCom);
-			if (!isStationMeteoAvailable(portCom, 5000))
+			if (isStationMeteoAvailable(portCom, 5000))
 				{
-				System.out.println("remove");
-				listPortsCom.remove(portCom);
+				listPortComMeteoAvailable.add(portCom);
 				}
 			}
 //		System.out.println("MeteoPortDetectionService.findListPortMeteo: listPortsCom.size()" + listPortsCom.size());
 
-		return listPortsCom;
+		return listPortComMeteoAvailable;
 		}
 
 	@Override
