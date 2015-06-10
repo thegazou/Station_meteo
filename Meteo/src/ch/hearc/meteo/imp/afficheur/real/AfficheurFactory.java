@@ -1,51 +1,37 @@
 
 package ch.hearc.meteo.imp.afficheur.real;
 
-import ch.hearc.meteo.imp.afficheur.real.station.JFrameMeteo;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
+import ch.hearc.meteo.spec.afficheur.AfficheurFactory_I;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
-public class AfficheurServiceT implements AfficheurService_I
+
+
+public class AfficheurFactory implements AfficheurFactory_I
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-	public AfficheurServiceT(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
+
+	public AfficheurFactory()
 		{
-		meteoFrame= new JFrameMeteo();
+		// rien
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override
-	public void printPression(MeteoEvent event)
+	@Override public AfficheurService_I createOnLocalPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		meteoFrame.printPression(event);
-
+		return new AfficheurServiceReal(affichageOptions, meteoServiceRemote);
 		}
 
-	@Override
-	public void printAltitude(MeteoEvent event)
+	@Override public AfficheurService_I createOnCentralPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		meteoFrame.printAltitude(event);
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		meteoFrame.printTemperature(event);
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		meteoFrame.updateMeteoServiceOptions(meteoServiceOptions);
+		return new AfficheurServiceReal(affichageOptions, meteoServiceRemote);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -55,5 +41,5 @@ public class AfficheurServiceT implements AfficheurService_I
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
-	private JFrameMeteo meteoFrame;
 	}
+

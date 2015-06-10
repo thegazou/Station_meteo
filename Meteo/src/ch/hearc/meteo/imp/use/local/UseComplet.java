@@ -5,7 +5,7 @@ package ch.hearc.meteo.imp.use.local;
 //import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 //import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
 //import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
-import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
 import ch.hearc.meteo.imp.afficheur.real.pclocal.JFramePCLocal;
 import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
@@ -79,7 +79,7 @@ public class UseComplet
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
 		//AfficheurService_I afficheurService = (new AfficheurSimulateurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
-		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
+		AfficheurService_I afficheurService1 = (new AfficheurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		//AfficheurService_I afficheurService11 = (new AfficheurSimulatorFactoryT()).createOnCentralPC(affichageOption, meteoServiceWrapper);
 
 		use(meteoService, afficheurService1);

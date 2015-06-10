@@ -5,14 +5,16 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
-import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
+import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
@@ -32,13 +34,14 @@ public class JPanelChoice extends JPanel
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelChoice(MeteoPortDetectionService meteoPortDetectionService )
+	public JPanelChoice(MeteoPortDetectionService meteoPortDetectionService)
 		{
-		this.meteoPortDetectionService=meteoPortDetectionService;
+		this.meteoPortDetectionService = meteoPortDetectionService;
 		geometry();
 		control();
 		appearance();
 		}
+
 	public static void use(MeteoService_I meteoService) throws MeteoServiceException
 		{
 		// Service Meteo
@@ -50,9 +53,10 @@ public class JPanelChoice extends JPanel
 		MeteoServiceWrapper_I meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
+		AfficheurService_I afficheurService1 = (new AfficheurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		use(meteoService, afficheurService1);
 		}
+
 	public static void use(final MeteoService_I meteoService, final AfficheurService_I afficheurService) throws MeteoServiceException
 		{
 		meteoService.addMeteoListener(new MeteoAdapter()
@@ -127,6 +131,7 @@ public class JPanelChoice extends JPanel
 		threadSimulationChangementDt.start();
 		threadPoolingOptions.start(); // update gui
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
@@ -148,49 +153,47 @@ public class JPanelChoice extends JPanel
 			// JComponent : Instanciation
 			multipleCom= new JButton("Use all station");
 			defaultCom= new JButton("Use default station");
+			final List<String> portList=meteoPortDetectionService.findListPortMeteo();
 			defaultCom.addMouseListener(new MouseListener()
 				{
 					@Override
 					public void mouseClicked(MouseEvent e)
 						{
-						// TODO Auto-generated method stub
-						MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
-						try
+						if(portList.size()!=0){
+							MeteoService_I meteoService = (new MeteoServiceFactory()).create(portList.get(0).toString());
+							try
+								{
+								use(meteoService);
+								}
+							catch (MeteoServiceException e1)
+								{
+								e1.printStackTrace();
+								}
+						}
+						else
 							{
-							use(meteoService);
-							}
-						catch (MeteoServiceException e1)
-							{
-							e1.printStackTrace();
+							JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
 							}
 						}
 
 					@Override
 					public void mouseEntered(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseExited(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mousePressed(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseReleased(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 				});
 			multipleCom.addMouseListener(new MouseListener()
@@ -199,35 +202,32 @@ public class JPanelChoice extends JPanel
 					@Override
 					public void mouseReleased(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mousePressed(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseExited(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseEntered(MouseEvent arg0)
 						{
-						// TODO Auto-generated method stub
-
 						}
 
 					@Override
 					public void mouseClicked(MouseEvent arg0)
 						{
+						if(portList.size()!=0){
 						new JFramePCLocalManuel(meteoPortDetectionService);
+						}
+						else{
+						JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
+						}
 
 						}
 				});
@@ -258,8 +258,8 @@ public class JPanelChoice extends JPanel
 	private void appearance()
 		{
 		// rien
-		this.setSize(new Dimension(200,100));
-		this.setPreferredSize(new Dimension(200,100));
+		this.setSize(new Dimension(200, 100));
+		this.setPreferredSize(new Dimension(200, 100));
 		this.setBorder(BorderFactory.createTitledBorder(""));
 		}
 

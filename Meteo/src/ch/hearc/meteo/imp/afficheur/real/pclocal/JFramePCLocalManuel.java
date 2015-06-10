@@ -12,10 +12,11 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
-import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
-import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
+import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
@@ -57,7 +58,7 @@ public class JFramePCLocalManuel extends JFrame
 		MeteoServiceWrapper_I meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
+		AfficheurService_I afficheurService1 = (new AfficheurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		use(meteoService, afficheurService1);
 		}
 
@@ -192,25 +193,24 @@ public class JFramePCLocalManuel extends JFrame
 						setMeteoService(arg0.getSource());
 						}
 
-
 				});
 			}
 
-
 		}
+
 	private void setMeteoService(Object object)
 		{
-		JButton button = (JButton) object;
+		JButton button = (JButton)object;
 		button.setVisible(false);
-		for(int i=0;i<tailleListe;i++)
+		for(int i = 0; i < tailleListe; i++)
 			{
-			if(button.getText()==comList.get(i).getText())
+			if (button.getText() == comList.get(i).getText())
 				{
 				statList.get(i).setText("Used");
 				statList.get(i).setVisible(false);
 				}
 			}
-		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(button.getText());
+		MeteoService_I meteoService = (new MeteoServiceFactory()).create(button.getText());
 		try
 			{
 			use(meteoService);
@@ -250,24 +250,25 @@ public class JFramePCLocalManuel extends JFrame
 
 	private void populate()
 		{
-		/*List<String> supplierNames = new ArrayList<String>();
-		supplierNames.add("COM1");
-		supplierNames.add("COM2");
-		supplierNames.add("COM3");
-		supplierNames.add("COM4");
-		supplierNames.add("COM5");
-		List<String> portList = supplierNames;*/
-		List<String> portList=meteoPortDetectionService.findListPortMeteo();
 
-		String state = "connecté";
+		List<String> portList = meteoPortDetectionService.findListPortMeteo();
+		System.out.println(portList);
+		String state = "Connected";
 		tailleListe = portList.size();
 		// JComponent : Instanciation
 		comList = new ArrayList<JButton>();
 		statList = new ArrayList<JLabel>();
-		for(int i = 0; i < tailleListe; i++)
+		if (tailleListe != 0)
 			{
-			comList.add(new JButton(portList.get(i).toString()));
-			statList.add(new JLabel(state));
+			for(int i = 0; i < tailleListe; i++)
+				{
+				comList.add(new JButton(portList.get(i).toString()));
+				statList.add(new JLabel(state));
+				}
+			}
+		else
+			{
+			JOptionPane.showMessageDialog(null,"0 Station Avaiable Actually");
 			}
 		}
 

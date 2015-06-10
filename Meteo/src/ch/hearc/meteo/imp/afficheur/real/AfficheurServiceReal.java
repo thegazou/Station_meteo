@@ -1,37 +1,51 @@
 
 package ch.hearc.meteo.imp.afficheur.real;
 
+import ch.hearc.meteo.imp.afficheur.real.station.JFrameMeteo;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
-import ch.hearc.meteo.spec.afficheur.AfficheurFactory_I;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
+import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
-
-
-public class AfficheurSimulatorFactoryT implements AfficheurFactory_I
+public class AfficheurServiceReal implements AfficheurService_I
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
-
-	public AfficheurSimulatorFactoryT()
+	public AfficheurServiceReal(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		// rien
+		meteoFrame= new JFrameMeteo();
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override public AfficheurService_I createOnLocalPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
+	@Override
+	public void printPression(MeteoEvent event)
 		{
-		return new AfficheurServiceT(affichageOptions, meteoServiceRemote);
+		meteoFrame.printPression(event);
+
 		}
 
-	@Override public AfficheurService_I createOnCentralPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
+	@Override
+	public void printAltitude(MeteoEvent event)
 		{
-		return new AfficheurServiceT(affichageOptions, meteoServiceRemote);
+		meteoFrame.printAltitude(event);
+		}
+
+	@Override
+	public void printTemperature(MeteoEvent event)
+		{
+		meteoFrame.printTemperature(event);
+		}
+
+	@Override
+	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
+		{
+		meteoFrame.updateMeteoServiceOptions(meteoServiceOptions);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -41,5 +55,5 @@ public class AfficheurSimulatorFactoryT implements AfficheurFactory_I
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
+	private JFrameMeteo meteoFrame;
 	}
-
