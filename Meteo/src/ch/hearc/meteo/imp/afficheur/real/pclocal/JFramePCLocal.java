@@ -16,6 +16,7 @@ public class JFramePCLocal extends JFrame
 
 	public JFramePCLocal()
 		{
+		meteoPortDetectionService= new MeteoPortDetectionService();
 		geometry();
 		control();
 		appearance();

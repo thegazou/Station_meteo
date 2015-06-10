@@ -13,9 +13,9 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
-import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
+import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
-import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
+import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
@@ -57,7 +57,7 @@ public class JFramePCLocalManuel extends JFrame
 		MeteoServiceWrapper_I meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		AfficheurService_I afficheurService1 = (new AfficheurSimulatorFactoryT()).createOnLocalPC(affichageOption, meteoServiceWrapper);
+		AfficheurService_I afficheurService1 = (new AfficheurFactory()).createOnLocalPC(affichageOption, meteoServiceWrapper);
 		use(meteoService, afficheurService1);
 		}
 
@@ -210,7 +210,7 @@ public class JFramePCLocalManuel extends JFrame
 				statList.get(i).setVisible(false);
 				}
 			}
-		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(button.getText());
+		MeteoService_I meteoService = (new MeteoServiceFactory()).create(button.getText());
 		try
 			{
 			use(meteoService);
@@ -257,8 +257,8 @@ public class JFramePCLocalManuel extends JFrame
 		supplierNames.add("COM4");
 		supplierNames.add("COM5");
 		List<String> portList = supplierNames;*/
-		List<String> portList=meteoPortDetectionService.findListPortMeteo();
-
+		List<String> portList=meteoPortDetectionService.findListPortSerie();
+		System.out.println(portList);
 		String state = "connecté";
 		tailleListe = portList.size();
 		// JComponent : Instanciation
