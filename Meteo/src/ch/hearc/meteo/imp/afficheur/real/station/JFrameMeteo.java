@@ -6,21 +6,21 @@ import java.awt.BorderLayout;
 import javax.swing.Box;
 import javax.swing.JFrame;
 
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
 import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
 
 
-public class JFrameMeteo extends JFrame implements AfficheurService_I
+public class JFrameMeteo extends JFrame
 	{
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JFrameMeteo()
+	public JFrameMeteo(AfficheurServiceMOOReal afficheurServiceMOOReal, boolean isCentral)
 		{
-
+		this.afficheurServiceMOOReal=afficheurServiceMOOReal;
+		this.isCentral=isCentral;
 		geometry();
 		control();
 		appearance();
@@ -28,33 +28,19 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public  						*|
 	\*------------------------------------------------------------------*/
-	@Override public void printPression(MeteoEvent event)
+	public void refresh()
 		{
-
-		nom=event.getSource().toString();
-		setNom();
-		stationPressiongraph.printPression(event);
-		stationInformation.printPression(event);
+		stationFormular.update();
+		stationPressiongraph.update();
+		stationInformation.update();
+		stationMeteoGraph.update();
+		stationMeteoGraphVisual.update();
+		}
+	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
+		{
+		stationFormular.updateMeteoServiceOptions(meteoServiceOptions);
 		}
 
-	@Override public void printAltitude(MeteoEvent event)
-		{
-		stationInformation.printAltitude(event);
-
-		}
-
-	@Override public void printTemperature(MeteoEvent event)
-		{
-		stationInformation.printTemperature(event);
-		stationMeteoGraph.printTemperature(event);
-		stationMeteoGraphVisual.printTemperature(event);
-		}
-
-	@Override public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -63,12 +49,11 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	private void geometry()
 		{
 			// JComponent : Instanciation
-			stationFormular= new JPanelFormulaireStationMeteo();
-			stationPressiongraph = new JPanelPressionGraphe();
-			stationInformation = new JPanelInformationStation();
-			stationMeteoGraph= new JPanelMeteoGraphe();
-			stationMeteoGraphVisual= new JPanelMeteoGrapheVisual();
-
+			stationFormular= new JPanelFormulaireStationMeteo(afficheurServiceMOOReal);
+			stationPressiongraph = new JPanelPressionGraphe(afficheurServiceMOOReal);
+			stationInformation = new JPanelInformationStation(afficheurServiceMOOReal);
+			stationMeteoGraph= new JPanelMeteoGraphe(afficheurServiceMOOReal);
+			stationMeteoGraphVisual= new JPanelMeteoGrapheVisual(afficheurServiceMOOReal);
 			setLayout();
 		}
 
@@ -97,20 +82,22 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 		}
 	private void control()
 		{
-		//addWindowListener(l)
 		}
 
 	private void appearance()
 		{
+		if (isCentral)
+			{
+			setTitle("Central " + afficheurServiceMOOReal.getTitre());
+			}
+		else
+			{
+			setTitle(afficheurServiceMOOReal.getTitre());
+			}
 		setSize(1000, 650);
 		setLocationRelativeTo(null); // frame centrer
 		setVisible(true); // last!
 		}
-	private void setNom()
-	{
-	setTitle(nom);
-	}
-
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -122,7 +109,11 @@ public class JFrameMeteo extends JFrame implements AfficheurService_I
 	private JPanelInformationStation stationInformation;
 	private JPanelMeteoGraphe stationMeteoGraph;
 	private JPanelMeteoGrapheVisual stationMeteoGraphVisual;
-	private String nom;
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
+	private boolean isCentral;
+
+
+
 
 
 	}

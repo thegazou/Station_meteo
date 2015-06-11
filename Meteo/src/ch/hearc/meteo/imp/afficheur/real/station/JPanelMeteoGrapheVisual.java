@@ -16,78 +16,58 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.StateReal;
+import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.MathTools;
 
-public class JPanelMeteoGrapheVisual extends JPanel implements AfficheurService_I
+public class JPanelMeteoGrapheVisual extends JPanel
 	{
 
-	public JPanelMeteoGrapheVisual()
+	public JPanelMeteoGrapheVisual(AfficheurServiceMOOReal afficheurServiceMOOReal)
 		{
-		cpt=0;
+		temp=0;
+		cpt=1;
+		i=1;
+		this.afficheurServiceMOOReal=afficheurServiceMOOReal;
+		deltat=0;
 		geometry();
 		control();
 		appearance();
 		}
 
-	/*------------------------------*\
-	|*				Set				*|
-	\*------------------------------*/
-
-	/*------------------------------*\
-	|*				Get				*|
-	\*------------------------------*/
-
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
-	@Override
-	public void printPression(MeteoEvent event)
+
+
+	public void update()
 		{
-		// TODO Auto-generated method stub
+		StateReal stateReal1 = afficheurServiceMOOReal.getStatTemperature();
+		if(temp!=stateReal1.getLast())
+			{
+			drawGraphTemp(Float.parseFloat(MathTools.arrondir(stateReal1.getLast())));
+			temp=stateReal1.getLast();
+			}
+
 
 		}
-
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		drawGraphTemp(event.getValue());
-
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	public void dessiner()
-		{
-
-		}
-
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 	private void drawGraphTemp(float value)
 		{
-		cpt++;
+
+		/*if(deltat==0)
+			{
+			deltat=10;
+			}*/
 		deltat=10;
 		if(temperature.getItemCount()>25)
 			{
 			temperature.clear();
 			}
 	    temperature.add(deltat*cpt, value);
-
+	    cpt++;
 
 		}
 
@@ -140,9 +120,14 @@ public class JPanelMeteoGrapheVisual extends JPanel implements AfficheurService_
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	private int deltat;
+	private long deltat;
 	private int cpt;
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
 
 	// Tools
 	private XYSeries temperature;
+	private int i;
+	private float temp;
+
+
 	}

@@ -16,24 +16,38 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.StateReal;
+import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.MathTools;
 
-public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
+public class JPanelPressionGraphe extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelPressionGraphe()
+	public JPanelPressionGraphe(AfficheurServiceMOOReal afficheurServiceMOOReal)
 		{
-		deltat=10;
-		cpt=0;
+		temp = 0;
+		this.afficheurServiceMOOReal = afficheurServiceMOOReal;
+		deltat = 10;
+		cpt = 0;
 		geometry();
 		control();
 		appearance();
+		}
+
+	public void update()
+		{
+		StateReal stateReal1 = afficheurServiceMOOReal.getStatPression();
+		if(temp!=stateReal1.getLast())
+			{
+			drawGraphPress(Float.parseFloat(MathTools.arrondir(stateReal1.getLast())));
+			temp=stateReal1.getLast();
+			}
+
+
 		}
 
 	/*------------------------------*\
@@ -47,39 +61,6 @@ public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
-	@Override
-	public void printPression(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-		drawGraphPress(event.getValue());
-
-		}
-
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-
-
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	public void dessiner()
-		{
-
-		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -87,12 +68,11 @@ public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
 	private void drawGraphPress(float value)
 		{
 		cpt++;
-		if(pression.getItemCount()>25)
+		if (pression.getItemCount() > 25)
 			{
 			pression.clear();
 			}
-		pression.add(deltat*cpt, value);
-
+		pression.add(deltat * cpt, value);
 
 		}
 
@@ -112,9 +92,9 @@ public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
 		plot.setRenderer(renderer);
 		plot.getRenderer().setSeriesPaint(0, new Color(0x00, 0xFF, 0x00));
 		ChartPanel chartPanel = new ChartPanel(chart);
-		Dimension panelD = new Dimension(650,280);
-        chartPanel.setPreferredSize(panelD);
-        chartPanel.setMaximumSize(panelD);
+		Dimension panelD = new Dimension(650, 280);
+		chartPanel.setPreferredSize(panelD);
+		chartPanel.setMaximumSize(panelD);
 
 			// Layout : Specification
 			{
@@ -135,9 +115,9 @@ public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
 
 	private void appearance()
 		{
-		Dimension panelD = new Dimension(700,350);
-        this.setPreferredSize(panelD);
-        this.setMaximumSize(panelD);
+		Dimension panelD = new Dimension(700, 350);
+		this.setPreferredSize(panelD);
+		this.setMaximumSize(panelD);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -149,4 +129,8 @@ public class JPanelPressionGraphe extends JPanel implements AfficheurService_I
 
 	// Tools
 	private XYSeries pression;
+	private int i;
+	private float temp;
+
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
 	}

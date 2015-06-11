@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoPortDetectionService;
 import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;

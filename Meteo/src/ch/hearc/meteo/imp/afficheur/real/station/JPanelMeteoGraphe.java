@@ -3,6 +3,7 @@ package ch.hearc.meteo.imp.afficheur.real.station;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.List;
 
 import javax.swing.JPanel;
 
@@ -11,19 +12,21 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.ThermometerPlot;
 import org.jfree.data.general.DefaultValueDataset;
 
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
+import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.MathTools;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
-public class JPanelMeteoGraphe extends JPanel implements AfficheurService_I
+public class JPanelMeteoGraphe extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelMeteoGraphe()
+	public JPanelMeteoGraphe(AfficheurServiceMOOReal afficheurServiceMOOReal)
 		{
+		i=1;
+		this.afficheurServiceMOOReal=afficheurServiceMOOReal;
 		geometry();
 		control();
 		appearance();
@@ -32,52 +35,27 @@ public class JPanelMeteoGraphe extends JPanel implements AfficheurService_I
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
-	@Override
-	public void printPression(MeteoEvent event)
+	public void update()
 		{
-		// TODO Auto-generated method stub
+		List<MeteoEvent> listMeteoEvent =afficheurServiceMOOReal.getListTemperature();
+		for(MeteoEvent meteoEvent:listMeteoEvent)
+			{
+			if(i==listMeteoEvent.size())
+				{
+				drawTemperature(Float.parseFloat(MathTools.arrondir(meteoEvent.getValue())));
+				i=1;
+				}
+			else{i++;}
 
+			}
 		}
-
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		drawTemperature(event.getValue());
-		//System.out.println(event.getSource());
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-
-	/*------------------------------*\
-	|*				Set				*|
-	\*------------------------------*/
-
-	/*------------------------------*\
-	|*				Get				*|
-	\*------------------------------*/
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 	private void drawTemperature(float value)
 		{
-		// Attention Valeurs tempMin et Max non déclaré
 		dataset.setValue(value);
-
-
 		}
 
 	private void geometry()
@@ -135,6 +113,8 @@ public class JPanelMeteoGraphe extends JPanel implements AfficheurService_I
 	private ThermometerPlot  temperatureThermometer ;
 	private ChartPanel chartPanel;
 	private DefaultValueDataset dataset;
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
+	private int i;
 
 
 	}
