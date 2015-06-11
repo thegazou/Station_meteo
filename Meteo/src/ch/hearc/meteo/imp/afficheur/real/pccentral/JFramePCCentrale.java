@@ -12,7 +12,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.SwingConstants;
 
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
-import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
+import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
 public class JFramePCCentrale extends JFrame
 	{
@@ -50,9 +50,9 @@ public class JFramePCCentrale extends JFrame
 
 		mapPanel = new JPanelMap(panelDefault);
 		panelMap.add(mapPanel, BorderLayout.CENTER);
-		stationList = new HashMap<String, MeteoService_I>();
-		af = new AffichageOptions(3, "COM5 COM6");
-		addStation(af, meteo);
+		stationList = new HashMap<String, MeteoServiceWrapper_I>();
+		/*af = new AffichageOptions(3, "COM5 COM6");
+		addStation(af, meteo);*/
 		}
 
 	private void control()
@@ -71,19 +71,19 @@ public class JFramePCCentrale extends JFrame
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public static void addStation(AffichageOptions affichageOptions, MeteoService_I service)
+	public static void addStation(AffichageOptions affichageOptions, MeteoServiceWrapper_I service)
 		{
 		if (stationList.containsKey(affichageOptions.getTitre()))
 			{
 			stationList.replace(affichageOptions.getTitre(), service);
-			panelDefault.setMap(stationList);
+			panelDefault.setMap(stationList,affichageOptions);
 			}
 		else
 			{
 			//System.out.println("FramePrincipale: "+service.getPort());
 			stationList.put(affichageOptions.getTitre(), service);
 			mapPanel.setMapsPoints(affichageOptions.getTitre());
-			panelDefault.setMap(stationList);
+			panelDefault.setMap(stationList,affichageOptions);
 			}
 
 		}
@@ -94,7 +94,6 @@ public class JFramePCCentrale extends JFrame
 
 	private static JPanelDefault panelDefault;
 	private static JPanelMap mapPanel;
-	private MeteoService_I meteo;
 	private AffichageOptions af;
-	private static Map<String, MeteoService_I> stationList;
+	private static Map<String, MeteoServiceWrapper_I> stationList;
 	}

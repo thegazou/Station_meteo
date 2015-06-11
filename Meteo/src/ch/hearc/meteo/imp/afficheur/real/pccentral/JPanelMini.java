@@ -14,19 +14,9 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
-import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
-import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
-import ch.hearc.meteo.spec.com.meteo.exception.MeteoServiceException;
-import ch.hearc.meteo.spec.com.meteo.listener.MeteoAdapter;
-import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
-import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper;
 import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
-
-import com.bilat.tools.reseau.rmi.RmiTools;
 
 public class JPanelMini extends JPanel
 	{
@@ -46,111 +36,7 @@ public class JPanelMini extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public static void use(MeteoService_I meteoService) throws MeteoServiceException
-		{
-		// Service Meteo
-		meteoService.connect();
-		MeteoServiceOptions meteoServiceOptions = new MeteoServiceOptions(800, 1000, 1200);
-		meteoService.start(meteoServiceOptions);
 
-		// Service Affichage
-		MeteoServiceWrapper_I meteoServiceWrapper = new MeteoServiceWrapper(meteoService);
-		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
-		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		AfficheurService_I afficheurService1 = (new AfficheurFactory()).createOnCentralPC(affichageOption, meteoServiceWrapper);
-		use(meteoService, afficheurService1);
-		}
-
-	public static void use(final MeteoService_I meteoService, final AfficheurService_I afficheurService) throws MeteoServiceException
-		{
-		meteoService.addMeteoListener(new MeteoAdapter()
-			{
-
-				@Override
-				public void temperaturePerformed(MeteoEvent event)
-					{
-					afficheurService.printTemperature(event);
-					}
-
-				@Override
-				public void altitudePerformed(MeteoEvent event)
-					{
-					afficheurService.printAltitude(event);
-					}
-
-				@Override
-				public void pressionPerformed(MeteoEvent event)
-					{
-					afficheurService.printPression(event);
-					}
-
-			});
-
-		// Modify MeteoServiceOptions
-		Thread threadSimulationChangementDt = new Thread(new Runnable()
-			{
-
-				@Override
-				public void run()
-					{
-					double x = 0;
-					double dx = Math.PI / 10;
-
-					while(true)
-						{
-						long dt = 1000 + (long)(5000 * Math.abs(Math.cos(x))); //ms
-
-						System.out.println("modification dt temperature = " + dt);
-
-						meteoService.getMeteoServiceOptions().setTemperatureDT(dt);
-
-						//	System.out.println(meteoService.getMeteoServiceOptions());
-
-						attendre(3000); // disons
-						x += dx;
-						}
-					}
-			});
-
-		// Update GUI MeteoServiceOptions
-		Thread threadPoolingOptions = new Thread(new Runnable()
-			{
-
-				@Override
-				public void run()
-					{
-
-					while(true)
-						{
-						MeteoServiceOptions option = meteoService.getMeteoServiceOptions();
-						afficheurService.updateMeteoServiceOptions(option);
-
-						//System.out.println(option);
-
-						attendre(1000); //disons
-						}
-					}
-			});
-
-		threadSimulationChangementDt.start();
-		threadPoolingOptions.start(); // update gui
-		}
-
-	/*------------------------------------------------------------------*\
-	|*							Methodes Private						*|
-	\*------------------------------------------------------------------*/
-
-	private static void attendre(long delay)
-		{
-		try
-			{
-			Thread.sleep(delay);
-			}
-		catch (InterruptedException e)
-			{
-			e.printStackTrace();
-			}
-		}
 	private void geometry()
 		{
 		addMouseListener(new MouseListener()
@@ -191,15 +77,9 @@ public class JPanelMini extends JPanel
 					String str = name;
 					String[] splited = str.split(" ");
 					System.out.println(splited[0]);
-					meteoService = (new MeteoServiceFactory()).create(splited[0]);
-					try
-						{
-						use(meteoService);
-						}
-					catch (MeteoServiceException e1)
-						{
-						e1.printStackTrace();
-						}
+					afficheurServiceMOOReal=new AfficheurServiceMOOReal(affichageOptions, meteoService);
+
+
 
 
 					}
@@ -263,9 +143,9 @@ public class JPanelMini extends JPanel
 
 	private Boolean isSelected;
 
-	public void setService(MeteoService_I meteoService_I)
+	public void setService(MeteoServiceWrapper_I meteoService_I, AffichageOptions affichageOptions)
 		{
-		//System.out.println("JPanelMini: "+meteoService_I.getPort());
+		this.affichageOptions=affichageOptions;
 		meteoService= meteoService_I;
 		}
 
@@ -276,10 +156,12 @@ public class JPanelMini extends JPanel
 
 
 
-	private MeteoService_I meteoService;
+	private MeteoServiceWrapper_I meteoService;
 	private int wait;
 	private int ID;
 	private String name;
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
+	private AffichageOptions affichageOptions;
 
 
 

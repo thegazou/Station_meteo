@@ -10,7 +10,8 @@ import javax.swing.JPanel;
 
 import org.jxmapviewer.viewer.GeoPosition;
 
-import ch.hearc.meteo.spec.com.meteo.MeteoService_I;
+import ch.hearc.meteo.spec.afficheur.AffichageOptions;
+import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 
 public class JPanelDefault extends JPanel
 	{
@@ -57,13 +58,13 @@ public class JPanelDefault extends JPanel
 		list.add(iD);
 
 		}
-	public void setMap(Map<String, MeteoService_I> stationList2)
+	public void setMap(Map<String, MeteoServiceWrapper_I> stationList2, AffichageOptions affichageOptions)
 		{
 		this.stationList = stationList2;
 		for(int i = 1; i <= stationList2.size(); i++)
 			{
 			//System.out.println("JpanelDefaut: "+stationList.get(list.get(i - 1)));
-			tabPanelMini[i - 1].setService(stationList2.get(list.get(i - 1)));
+			tabPanelMini[i - 1].setService(stationList2.get(list.get(i - 1)),affichageOptions);
 			}
 
 		}
@@ -72,7 +73,7 @@ public class JPanelDefault extends JPanel
 	\*------------------------------------------------------------------*/
 
 	private List<String> list;
-	private Map<String, MeteoService_I> stationList;
+	private Map<String, MeteoServiceWrapper_I> stationList;
 	private JPanelMini[] tabPanelMini;
 
 	}
