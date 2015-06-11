@@ -3,6 +3,8 @@ package ch.hearc.meteo.imp.afficheur.real.pclocal;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
@@ -104,16 +106,11 @@ public class JFramePCLocalManuel extends JFrame
 						System.out.println("modification dt temperature = " + dt);
 
 						meteoService.getMeteoServiceOptions().setTemperatureDT(dt);
-
-						//	System.out.println(meteoService.getMeteoServiceOptions());
-
 						attendre(3000); // disons
 						x += dx;
 						}
 					}
 			});
-
-		// Update GUI MeteoServiceOptions
 		Thread threadPoolingOptions = new Thread(new Runnable()
 			{
 
@@ -126,7 +123,6 @@ public class JFramePCLocalManuel extends JFrame
 						MeteoServiceOptions option = meteoService.getMeteoServiceOptions();
 						afficheurService.updateMeteoServiceOptions(option);
 
-						//System.out.println(option);
 
 						attendre(1000); //disons
 						}
@@ -155,6 +151,21 @@ public class JFramePCLocalManuel extends JFrame
 
 	private void geometry()
 		{
+		refresh=new JButton("Refresh");
+		refresh.addActionListener(new ActionListener()
+			{
+
+				@Override
+				public void actionPerformed(ActionEvent e)
+					{
+					remove();
+					populate();
+					setLayout();
+					setControl();
+					}
+
+
+			});
 		populate();
 		setLayout();
 		setControl();
@@ -197,6 +208,12 @@ public class JFramePCLocalManuel extends JFrame
 			}
 
 		}
+	private void remove()
+		{
+		comList.removeAll(comList);
+		statList.removeAll(statList);
+
+		}
 
 	private void setMeteoService(Object object)
 		{
@@ -228,11 +245,6 @@ public class JFramePCLocalManuel extends JFrame
 		Box right = Box.createVerticalBox();
 		for(int i = 0; i < tailleListe; i++)
 			{
-			/* Test si connecter pour able ou non */
-			}
-
-		for(int i = 0; i < tailleListe; i++)
-			{
 			comList.get(i).setPreferredSize(new Dimension(140, 30));
 			left.add(comList.get(i));
 			left.add(Box.createVerticalGlue());
@@ -240,9 +252,11 @@ public class JFramePCLocalManuel extends JFrame
 			right.add(statList.get(i));
 			right.add(Box.createVerticalGlue());
 			}
+		left.add(refresh);
 		Box line = Box.createHorizontalBox();
 		line.add(left);
 		line.add(right);
+
 		setLayout(new BorderLayout());
 		add(line, BorderLayout.CENTER);
 
@@ -250,7 +264,6 @@ public class JFramePCLocalManuel extends JFrame
 
 	private void populate()
 		{
-
 		List<String> portList = meteoPortDetectionService.findListPortMeteo();
 		System.out.println(portList);
 		String state = "Connected";
@@ -295,5 +308,6 @@ public class JFramePCLocalManuel extends JFrame
 	private ArrayList<JButton> comList;
 	private ArrayList<JLabel> statList;
 	private int tailleListe;
+	private JButton refresh;
 
 	}

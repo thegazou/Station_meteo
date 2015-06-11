@@ -57,13 +57,13 @@ public class JPanelDefault extends JPanel
 		list.add(iD);
 
 		}
-	public void setMap(Map<String, MeteoService_I> stationList)
+	public void setMap(Map<String, MeteoService_I> stationList2)
 		{
-		this.stationList = stationList;
-		for(int i = 1; i <= stationList.size(); i++)
+		this.stationList = stationList2;
+		for(int i = 1; i <= stationList2.size(); i++)
 			{
 			//System.out.println("JpanelDefaut: "+stationList.get(list.get(i - 1)));
-			tabPanelMini[i - 1].setService(stationList.get(list.get(i - 1)));
+			tabPanelMini[i - 1].setService(stationList2.get(list.get(i - 1)));
 			}
 
 		}

@@ -106,6 +106,7 @@ public class MeteoServiceOptions implements Serializable
 		{
 		Assert.assertTrue(pressionDT > 0);
 		this.pressionDT = Math.max(EPSILON_MS, pressionDT);
+		System.out.println("la");
 		}
 
 	/**

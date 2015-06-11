@@ -25,11 +25,11 @@ public class JPanelMeteoGrapheVisual extends JPanel
 
 	public JPanelMeteoGrapheVisual(AfficheurServiceMOOReal afficheurServiceMOOReal)
 		{
-		temp=0;
-		cpt=1;
-		i=1;
-		this.afficheurServiceMOOReal=afficheurServiceMOOReal;
-		deltat=0;
+		temp = 0;
+		cpt = 1;
+		i = 1;
+		this.afficheurServiceMOOReal = afficheurServiceMOOReal;
+		deltat = 0;
 		geometry();
 		control();
 		appearance();
@@ -39,35 +39,31 @@ public class JPanelMeteoGrapheVisual extends JPanel
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-
 	public void update()
 		{
 		StateReal stateReal1 = afficheurServiceMOOReal.getStatTemperature();
+
 		if(temp!=stateReal1.getLast())
 			{
 			drawGraphTemp(Float.parseFloat(MathTools.arrondir(stateReal1.getLast())));
 			temp=stateReal1.getLast();
 			}
 
-
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
 	private void drawGraphTemp(float value)
 		{
 
-		/*if(deltat==0)
-			{
-			deltat=10;
-			}*/
-		deltat=10;
-		if(temperature.getItemCount()>25)
+		deltat = 10;
+		if (temperature.getItemCount() > 25)
 			{
 			temperature.clear();
 			}
-	    temperature.add(deltat*cpt, value);
-	    cpt++;
+		temperature.add(deltat * cpt, value);
+		cpt++;
 
 		}
 
@@ -88,9 +84,9 @@ public class JPanelMeteoGrapheVisual extends JPanel
 		plot.setRenderer(renderer);
 		plot.getRenderer().setSeriesPaint(0, new Color(0x00, 0xFF, 0x00));
 		ChartPanel chartPanel = new ChartPanel(chart);
-		Dimension panelD = new Dimension(650,280);
-        chartPanel.setPreferredSize(panelD);
-        chartPanel.setMaximumSize(panelD);
+		Dimension panelD = new Dimension(650, 280);
+		chartPanel.setPreferredSize(panelD);
+		chartPanel.setMaximumSize(panelD);
 
 			// Layout : Specification
 			{
@@ -111,9 +107,9 @@ public class JPanelMeteoGrapheVisual extends JPanel
 
 	private void appearance()
 		{
-		Dimension panelD = new Dimension(700,350);
-        this.setPreferredSize(panelD);
-        this.setMaximumSize(panelD);
+		Dimension panelD = new Dimension(700, 350);
+		this.setPreferredSize(panelD);
+		this.setMaximumSize(panelD);
 		}
 
 	/*------------------------------------------------------------------*\
@@ -128,6 +124,5 @@ public class JPanelMeteoGrapheVisual extends JPanel
 	private XYSeries temperature;
 	private int i;
 	private float temp;
-
 
 	}
