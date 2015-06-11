@@ -6,6 +6,7 @@ import java.awt.GridLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.Timer;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -109,7 +110,16 @@ public class JPanelChoice extends JPanel
 						jFramePCLocalManuel = new JFramePCLocalManuel(meteoPortDetectionService);
 						while(jFramePCLocalManuel.getPortName().equals("undefined"))
 							{
-
+							Timer timer=new Timer();
+							try
+								{
+								timer.wait(100);
+								}
+							catch (InterruptedException e)
+								{
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+								}
 							}
 						portName=jFramePCLocalManuel.getPortName();
 						}

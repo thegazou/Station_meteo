@@ -17,6 +17,7 @@ public class JFramePCLocal extends JFrame
 	public JFramePCLocal()
 		{
 		meteoPortDetectionService = new MeteoPortDetectionService();
+		System.out.println("JFramePCLocal: nombre de port détécté= "+meteoPortDetectionService.findListPortMeteo().size());
 		geometry();
 		control();
 		appearance();

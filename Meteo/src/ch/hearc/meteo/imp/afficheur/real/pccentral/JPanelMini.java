@@ -77,6 +77,7 @@ public class JPanelMini extends JPanel
 					String[] splited = str.split(" ");
 					System.out.println(splited[0]);
 					afficheurServiceMOOReal=new AfficheurServiceMOOReal(affichageOptions, meteoService);
+					//new JFrameMeteo(afficheurServiceMOOReal, true);
 
 
 

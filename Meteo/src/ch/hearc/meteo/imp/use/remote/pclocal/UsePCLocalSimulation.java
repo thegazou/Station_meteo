@@ -40,7 +40,7 @@ public class UsePCLocalSimulation
 
 		// Service Meteo
 
-		String portName = "COM1";
+		String portName = "COM4";
 		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(portName);
 		meteoService.connect();
 		MeteoServiceOptions meteoServiceOptions = new MeteoServiceOptions(800, 1000, 1200);

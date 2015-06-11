@@ -92,7 +92,7 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	private AfficheurService_I createAfficheurService(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
 		//done
-		//JFramePCCentrale.addStation(affichageOptions, (MeteoService_I)meteoServiceRemote);
+
 		return (new AfficheurFactory()).createOnCentralPC(affichageOptions, meteoServiceRemote);
 		}
 
@@ -153,4 +153,5 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	public static final int RMI_LOCAL_PORT = RmiTools.PORT_RMI_DEFAUT;
 	//public final static RmiURL RMI_URL = rmiUrl();
 	public final static RmiURL RMI_URL = new RmiURL(RMI_ID, RMI_LOCAL_PORT);
+	//-Dip=157.26.69.93
 	}
