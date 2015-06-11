@@ -47,10 +47,10 @@ public class JFramePCLocalManuel extends JFrame
 				@Override
 				public void actionPerformed(ActionEvent e)
 					{
-					remove();
-					populate();
-					setLayout();
-					setControl();
+					//remove();
+					//populate();
+					//setLayout();
+					//setControl();
 					}
 
 
@@ -153,7 +153,6 @@ public class JFramePCLocalManuel extends JFrame
 		System.out.println("portList="+portList);
 		String state = "Connected";
 		tailleListe = portList.size();
-		// JComponent : Instanciation
 		comList = new ArrayList<JButton>();
 		statList = new ArrayList<JLabel>();
 		if (tailleListe != 0)

@@ -18,7 +18,7 @@ public class UseJFrameMain
 
 	public static void main()
 		{
-		//new JFramePCCentrale();
+		new JFramePCCentrale();
 		}
 
 	/*------------------------------------------------------------------*\

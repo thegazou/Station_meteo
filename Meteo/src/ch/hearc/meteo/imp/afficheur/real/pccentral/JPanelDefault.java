@@ -1,7 +1,6 @@
 
 package ch.hearc.meteo.imp.afficheur.real.pccentral;
 
-import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,29 +21,26 @@ public class JPanelDefault extends JPanel
 
 	public JPanelDefault()
 		{
-		list = new ArrayList<String>();
-		setLayout(new FlowLayout());
-
+		portsList = new ArrayList<String>();
+		//setLayout(new FlowLayout());
 		}
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void update(Map<String, GeoPosition> mapspoint)
+	public void update(Map<String, GeoPosition> mapsPoint)
 		{
-
-		Map<String, GeoPosition> map = mapspoint;
-		tabPanelMini = new JPanelMini[map.size()];
+		Map<String, GeoPosition> mapsPoints = mapsPoint;
+		tabPanelMini = new JPanelMini[mapsPoints.size()];
 		removeAll();
 		revalidate();
 		repaint();
-		for(int i = 1; i <= map.size(); i++)
+		for(int i = 1; i <= mapsPoints.size(); i++)
 			{
-			tabPanelMini[i - 1] = new JPanelMini(i, list.get(i - 1));
+			tabPanelMini[i - 1] = new JPanelMini(i, portsList.get(i - 1));
 			add(tabPanelMini[i - 1]);
 			}
-
 		}
 
 	public JPanelMini[] getTabPanelMini()
@@ -52,27 +48,26 @@ public class JPanelDefault extends JPanel
 		return tabPanelMini;
 		}
 
-
-	public void setStringPort(String iD)
+	public void setStringPort(String port)
 		{
-		list.add(iD);
-
+		portsList.add(port);
 		}
-	public void setMap(Map<String, MeteoServiceWrapper_I> stationList2, AffichageOptions affichageOptions)
+
+	public void setMap(Map<String, MeteoServiceWrapper_I> stationLists, AffichageOptions affichageOptions)
 		{
-		this.stationList = stationList2;
-		for(int i = 1; i <= stationList2.size(); i++)
+		this.stationList = stationLists;
+		for(int i = 1; i <= stationLists.size(); i++)
 			{
-			//System.out.println("JpanelDefaut: "+stationList.get(list.get(i - 1)));
-			tabPanelMini[i - 1].setService(stationList2.get(list.get(i - 1)),affichageOptions);
+			tabPanelMini[i - 1].setService(stationLists.get(portsList.get(i - 1)), affichageOptions);
 			}
 
 		}
+
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	private List<String> list;
+	private List<String> portsList;
 	private Map<String, MeteoServiceWrapper_I> stationList;
 	private JPanelMini[] tabPanelMini;
 

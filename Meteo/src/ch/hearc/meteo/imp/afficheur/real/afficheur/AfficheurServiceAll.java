@@ -1,8 +1,6 @@
 
 package ch.hearc.meteo.imp.afficheur.real.afficheur;
 
-
-
 import ch.hearc.meteo.imp.afficheur.real.station.JFrameMeteo;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
@@ -17,13 +15,10 @@ public class AfficheurServiceAll implements AfficheurService_I
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	/**
-	 * n = #data to print
-	 */
 	public AfficheurServiceAll(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote, boolean isCentral)
 		{
 		afficheurServiceMOOReal = new AfficheurServiceMOOReal(affichageOptions, meteoServiceRemote);
-		meteo= new JFrameMeteo(afficheurServiceMOOReal, isCentral);
+		meteo = new JFrameMeteo(afficheurServiceMOOReal, isCentral);
 
 		}
 
@@ -31,19 +26,22 @@ public class AfficheurServiceAll implements AfficheurService_I
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	@Override public void printAltitude(MeteoEvent event)
+	@Override
+	public void printAltitude(MeteoEvent event)
 		{
 		afficheurServiceMOOReal.printAltitude(event);
 		meteo.refresh();
 		}
 
-	@Override public void printTemperature(MeteoEvent event)
+	@Override
+	public void printTemperature(MeteoEvent event)
 		{
 		afficheurServiceMOOReal.printTemperature(event);
 		meteo.refresh();
 		}
 
-	@Override public void printPression(MeteoEvent event)
+	@Override
+	public void printPression(MeteoEvent event)
 		{
 		afficheurServiceMOOReal.printPression(event);
 		meteo.refresh();
@@ -53,14 +51,11 @@ public class AfficheurServiceAll implements AfficheurService_I
 	|*				Set				*|
 	\*------------------------------*/
 
-	@Override public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
+	@Override
+	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
 		{
 		meteo.updateMeteoServiceOptions(meteoServiceOptions);
 		}
-
-	/*------------------------------------------------------------------*\
-	|*							Methodes Private						*|
-	\*------------------------------------------------------------------*/
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|

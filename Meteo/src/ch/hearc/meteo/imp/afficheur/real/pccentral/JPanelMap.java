@@ -65,13 +65,12 @@ public class JPanelMap extends JPanel
 
 	public void setMapsPoints(String ID)
 		{
+		/*Random Position*/
 		Random randomGenerator = new Random();
 		int one = randomGenerator.nextInt(70);
 		int two = randomGenerator.nextInt(70);
-
 		int four = randomGenerator.nextInt(70);
 		int five = randomGenerator.nextInt(70);
-
 		mapspoint.put(ID, new GeoPosition(one, two, 0, four, five, 0));
 		waypoints = this.peupler();
 		panelDefault.setStringPort(ID);
@@ -85,25 +84,15 @@ public class JPanelMap extends JPanel
 		{
 
 		mapspoint = getMapsPoints();
-		Iterator<Entry<String, GeoPosition>> iteratormap = mapspoint.entrySet().iterator();
-
+		Iterator<Entry<String, GeoPosition>> mapIterator = mapspoint.entrySet().iterator();
 		int i = 0;
-		int nombreDeStationDetecte = mapspoint.size();
-		while(iteratormap.hasNext() && i < nombreDeStationDetecte)
+		int numberOfStation = mapspoint.size();
+		while(mapIterator.hasNext() && i < numberOfStation)
 			{
-			Entry<String, GeoPosition> myvalue = iteratormap.next();
-			if (i == -1)
-				{
-				waypoints.add(new MyWaypoint(i + 1 + "", Color.RED, myvalue.getValue()));
-				}
-			else
-				{
-				waypoints.add(new MyWaypoint(i + 1 + "", Color.GREEN, myvalue.getValue()));
-				}
-
+			Entry<String, GeoPosition> value = mapIterator.next();
+			waypoints.add(new MyWaypoint(i + 1 + "", Color.GREEN, value.getValue()));
 			i++;
 			}
-
 		return waypoints;
 		}
 
@@ -113,12 +102,12 @@ public class JPanelMap extends JPanel
 
 	private void appearance()
 		{
-
+		//Nothing
 		}
 
 	private void control()
 		{
-
+		//Nothing
 		}
 
 	private void geometry()
@@ -127,9 +116,11 @@ public class JPanelMap extends JPanel
 		/*Create a map*/
 		TileFactoryInfo tilefactoryInfo = new VirtualEarthTileFactoryInfo(VirtualEarthTileFactoryInfo.MAP);
 		DefaultTileFactory defaultTileFactory = new DefaultTileFactory(tilefactoryInfo);
-		defaultTileFactory.setThreadPoolSize(8);
+		defaultTileFactory.setThreadPoolSize(10);
 		File file = new File(System.getProperty("user.home") + File.separator + ".jxmapviewer2");
 		LocalResponseCache.installResponseCache(tilefactoryInfo.getBaseURL(), file, false);
+
+		/*Create new JXMapViewer*/
 		mapViewer = new JXMapViewer();
 		mapViewer.setTileFactory(defaultTileFactory);
 		waypoints = new HashSet<MyWaypoint>();
@@ -137,8 +128,9 @@ public class JPanelMap extends JPanel
 		waypoints = this.peupler();
 		updateAll();
 
-		mapViewer.setZoom(10);
-		mapViewer.setAddressLocation(new GeoPosition(50, 7, 0, 8, 41, 0));
+		/*Set Default zoom */
+		mapViewer.setZoom(8);
+		mapViewer.setAddressLocation(new GeoPosition(40, 40, 0, 40, 40, 0));
 
 		/*Zoom and other functions */
 		MouseInputListener miListener = new PanMouseInputListener(mapViewer);

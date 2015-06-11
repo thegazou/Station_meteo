@@ -73,7 +73,6 @@ public class JPanelMini extends JPanel
 				@Override
 				public void mouseClicked(MouseEvent e)
 					{
-					// TODO Auto-generated method stub
 					String str = name;
 					String[] splited = str.split(" ");
 					System.out.println(splited[0]);

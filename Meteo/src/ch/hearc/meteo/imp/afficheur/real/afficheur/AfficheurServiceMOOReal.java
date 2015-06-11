@@ -47,7 +47,6 @@ public class AfficheurServiceMOOReal
 			manage(listAltitude, event);
 			statAltitude.update(event.getValue());
 
-			//afficherConsole(listAltitude, MeteoEventType_E.ALTITUDE.name() + ESPACE + affichageOptions.getTitre());
 			}
 		}
 
@@ -58,7 +57,6 @@ public class AfficheurServiceMOOReal
 			manage(listPression, event);
 			statPression.update(event.getValue());
 
-			//afficherConsole(listPression, MeteoEventType_E.PRESSION.name() + ESPACE + affichageOptions.getTitre());
 			}
 		}
 
@@ -69,7 +67,6 @@ public class AfficheurServiceMOOReal
 			manage(listTemperature, event);
 			statTemperature.update(event.getValue());
 
-			//afficherConsole(listTemperature, MeteoEventType_E.TEMPERATURE.name() + ESPACE + affichageOptions.getTitre());
 			}
 		}
 
@@ -175,21 +172,6 @@ public class AfficheurServiceMOOReal
 		listMeteoEvent.add(event);
 		}
 
-	/*------------------------------*\
-	|*			  Static			*|
-	\*------------------------------*/
-
-	private static void afficherConsole(List<MeteoEvent> listMeteoEvent, String titre)
-		{
-		//System.out.print("[AfficheurServiceMOO] : " + titre + " : ");
-		//for(MeteoEvent meteoEvent:listMeteoEvent)
-			//{
-			//System.out.print(meteoEvent.getValue() + " ");
-			//}
-		//System.out.println();
-
-		}
-
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
@@ -197,7 +179,6 @@ public class AfficheurServiceMOOReal
 	// Inputs
 	private AffichageOptions affichageOptions;
 	private MeteoServiceWrapper_I meteoServiceRemote;
-	private MeteoServiceOptions meteoServiceOptions;
 
 	// Tools
 	private List<MeteoEvent> listAltitude;
