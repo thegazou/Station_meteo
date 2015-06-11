@@ -23,6 +23,7 @@ public class AfficheurServiceAll implements AfficheurService_I
 	public AfficheurServiceAll(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote, boolean isCentral)
 		{
 		afficheurServiceMOOReal = new AfficheurServiceMOOReal(affichageOptions, meteoServiceRemote);
+		//JFramePCCentrale.addStation(affichageOptions, meteoServiceRemote);
 		meteo= new JFrameMeteo(afficheurServiceMOOReal, isCentral);
 
 		}
