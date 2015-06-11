@@ -142,6 +142,7 @@ public class MeteoPortDetectionService implements MeteoPortDetectionService_I
 		return findListPortMeteo(new LinkedList<String>());
 		}
 
+
 	/*------------------------------*\
 	|*				Set				*|
 	\*------------------------------*/

@@ -105,8 +105,8 @@ public class ComConnexion implements ComConnexions_I
 								}
 							catch (Exception e)
 								{
-								// TODO Auto-generated catch block
-								e.printStackTrace();
+
+								System.err.println("[ComConnexion] start: " + e.getMessage());
 								}
 
 						}
@@ -153,7 +153,7 @@ public class ComConnexion implements ComConnexions_I
 					}
 				default:
 					{
-					System.err.println("ComConnexion:traiterdonnees / type de données non prévu");
+					System.err.println("[ComConnexion] traiterdonnees: type de données non prévu");
 					break;
 					}
 				}
@@ -247,7 +247,6 @@ public class ComConnexion implements ComConnexions_I
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
 	\*------------------------------------------------------------------*/
-
 
 	/*------------------------------------------------------------------*\
 	|*							Attributs Private						*|
