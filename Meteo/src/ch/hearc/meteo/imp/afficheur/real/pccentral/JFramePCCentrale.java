@@ -23,6 +23,7 @@ public class JFramePCCentrale extends JFrame
 
 	public JFramePCCentrale()
 		{
+
 		geometry();
 		control();
 		appearance();
@@ -70,7 +71,7 @@ public class JFramePCCentrale extends JFrame
 	|*							Methodes Public							*|
 	\*------------------------------------------------------------------*/
 
-	public void addStation(AffichageOptions affichageOptions, MeteoService_I service)
+	public static void addStation(AffichageOptions affichageOptions, MeteoService_I service)
 		{
 		if (stationList.containsKey(affichageOptions.getTitre()))
 			{
@@ -91,9 +92,9 @@ public class JFramePCCentrale extends JFrame
 	|*							Attributs Private						*|
 	\*------------------------------------------------------------------*/
 
-	private JPanelDefault panelDefault;
-	private JPanelMap mapPanel;
+	private static JPanelDefault panelDefault;
+	private static JPanelMap mapPanel;
 	private MeteoService_I meteo;
 	private AffichageOptions af;
-	private Map<String, MeteoService_I> stationList;
+	private static Map<String, MeteoService_I> stationList;
 	}

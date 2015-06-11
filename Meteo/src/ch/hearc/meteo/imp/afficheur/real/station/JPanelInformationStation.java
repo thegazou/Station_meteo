@@ -4,66 +4,49 @@ package ch.hearc.meteo.imp.afficheur.real.station;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
-import ch.hearc.meteo.spec.com.meteo.MeteoServiceOptions;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurServiceMOOReal;
+import ch.hearc.meteo.imp.afficheur.simulateur.moo.Stat;
+import ch.hearc.meteo.imp.afficheur.simulateur.vue.atome.MathTools;
 import ch.hearc.meteo.spec.com.meteo.listener.event.MeteoEvent;
 
-public class JPanelInformationStation extends JPanel implements AfficheurService_I
+public class JPanelInformationStation extends JPanel
 	{
 
 	/*------------------------------------------------------------------*\
 	|*							Constructeurs							*|
 	\*------------------------------------------------------------------*/
 
-	public JPanelInformationStation()
+	public JPanelInformationStation(AfficheurServiceMOOReal afficheurServiceMOOReal)
 		{
+		this.afficheurServiceMOOReal=afficheurServiceMOOReal;
 		geometry();
 		control();
 		appearance();
 		}
-
-	/*------------------------------------------------------------------*\
-	|*							Methodes Public							*|
-	\*------------------------------------------------------------------*/
-	@Override
-	public void printPression(MeteoEvent event)
+	public void update()
 		{
-		drawPression(event.getValue());
-
+		List<MeteoEvent> listMeteoEvent =afficheurServiceMOOReal.getListPression();
+		for(MeteoEvent meteoEvent:listMeteoEvent)
+			{
+			drawPression(Float.parseFloat(MathTools.arrondir(meteoEvent.getValue())));
+			}
+		List<MeteoEvent> listMeteoEvent2 =afficheurServiceMOOReal.getListAltitude();
+		for(MeteoEvent meteoEvent:listMeteoEvent2)
+			{
+			drawAltitude(Float.parseFloat(MathTools.arrondir(meteoEvent.getValue())));
+			}
+		List<MeteoEvent> listMeteoEvent3 =afficheurServiceMOOReal.getListTemperature();
+		for(MeteoEvent meteoEvent:listMeteoEvent3)
+			{
+			drawTemperature(Float.parseFloat(MathTools.arrondir(meteoEvent.getValue())));
+			}
 		}
-
-	@Override
-	public void printAltitude(MeteoEvent event)
-		{
-		drawAltitude(event.getValue());
-
-		}
-
-	@Override
-	public void printTemperature(MeteoEvent event)
-		{
-		drawTemperature(event.getValue());
-		}
-
-	@Override
-	public void updateMeteoServiceOptions(MeteoServiceOptions meteoServiceOptions)
-		{
-		// TODO Auto-generated method stub
-
-		}
-
-	/*------------------------------*\
-	|*				Set				*|
-	\*------------------------------*/
-
-	/*------------------------------*\
-	|*				Get				*|
-	\*------------------------------*/
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -238,5 +221,8 @@ public class JPanelInformationStation extends JPanel implements AfficheurService
 	private float maxTemp;
 	private float minPress;
 	private float maxPress;
+	private Stat stat;
+	private AfficheurServiceMOOReal afficheurServiceMOOReal;
+
 
 	}

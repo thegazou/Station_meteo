@@ -92,9 +92,9 @@ public class JPanelMap extends JPanel
 		while(iteratormap.hasNext() && i < nombreDeStationDetecte)
 			{
 			Entry<String, GeoPosition> myvalue = iteratormap.next();
-			if (i == 1)
+			if (i == -1)
 				{
-				waypoints.add(new MyWaypoint(i + 1 + "", Color.BLACK, myvalue.getValue()));
+				waypoints.add(new MyWaypoint(i + 1 + "", Color.RED, myvalue.getValue()));
 				}
 			else
 				{

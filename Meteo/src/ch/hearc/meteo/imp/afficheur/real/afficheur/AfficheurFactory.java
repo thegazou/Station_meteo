@@ -1,5 +1,5 @@
 
-package ch.hearc.meteo.imp.afficheur.real;
+package ch.hearc.meteo.imp.afficheur.real.afficheur;
 
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurFactory_I;
@@ -26,12 +26,12 @@ public class AfficheurFactory implements AfficheurFactory_I
 
 	@Override public AfficheurService_I createOnLocalPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		return new AfficheurServiceReal(affichageOptions, meteoServiceRemote);
+		return new AfficheurServiceAll(affichageOptions, meteoServiceRemote, true);
 		}
 
 	@Override public AfficheurService_I createOnCentralPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		return new AfficheurServiceReal(affichageOptions, meteoServiceRemote);
+		return new AfficheurServiceAll(affichageOptions, meteoServiceRemote, true);
 		}
 
 	/*------------------------------------------------------------------*\

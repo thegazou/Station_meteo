@@ -14,7 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
-import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
 import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;

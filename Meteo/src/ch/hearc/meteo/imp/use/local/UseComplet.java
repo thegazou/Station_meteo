@@ -5,8 +5,7 @@ package ch.hearc.meteo.imp.use.local;
 //import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
 //import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
 //import ch.hearc.meteo.imp.afficheur.real.AfficheurSimulatorFactoryT;
-import ch.hearc.meteo.imp.afficheur.real.AfficheurFactory;
-import ch.hearc.meteo.imp.afficheur.real.pclocal.JFramePCLocal;
+import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
 import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
@@ -43,7 +42,7 @@ public class UseComplet
 		{
 
 		//JFrameMain mainPrincipale= new JFrameMain();
-		JFramePCLocal pcLocale= new JFramePCLocal(/*objet lukas*/);
+		/*JFramePCLocal pcLocale= new JFramePCLocal(objet lukas);*/
 
 		//MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create("COM1");
 		//MeteoService_I meteoService1 = (new MeteoServiceFactory()).create("COM4");
