@@ -5,8 +5,7 @@ import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
 import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
-import ch.hearc.meteo.imp.afficheur.real.pclocal.JFramePCLocal;
-import ch.hearc.meteo.imp.com.real.MeteoServiceFactory;
+import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.imp.reseau.RemoteAfficheurCreator;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
@@ -24,7 +23,7 @@ import ch.hearc.meteo.spec.reseau.rmiwrapper.MeteoServiceWrapper_I;
 import com.bilat.tools.reseau.rmi.RmiTools;
 import com.bilat.tools.reseau.rmi.RmiURL;
 
-public class UsePCLocal
+public class UsePCLocalSimulation
 	{
 
 	/*------------------------------------------------------------------*\
@@ -40,14 +39,9 @@ public class UsePCLocal
 		{
 
 		// Service Meteo
-		JFramePCLocal jFramePCLocal = new JFramePCLocal();
-		while(jFramePCLocal.getPortName().equals("undefined"))
-			{
 
-			}
-		System.out.println("port is defined");
-		String portName = jFramePCLocal.getPortName();
-		MeteoService_I meteoService = (new MeteoServiceFactory()).create(portName);
+		String portName = "COM1";
+		MeteoService_I meteoService = (new MeteoServiceSimulatorFactory()).create(portName);
 		meteoService.connect();
 		MeteoServiceOptions meteoServiceOptions = new MeteoServiceOptions(800, 1000, 1200);
 		meteoService.start(meteoServiceOptions);

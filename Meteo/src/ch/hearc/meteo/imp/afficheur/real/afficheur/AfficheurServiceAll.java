@@ -24,6 +24,7 @@ public class AfficheurServiceAll implements AfficheurService_I
 		{
 		afficheurServiceMOOReal = new AfficheurServiceMOOReal(affichageOptions, meteoServiceRemote);
 		meteo= new JFrameMeteo(afficheurServiceMOOReal, isCentral);
+
 		}
 
 	/*------------------------------------------------------------------*\

@@ -26,7 +26,7 @@ public class AfficheurFactory implements AfficheurFactory_I
 
 	@Override public AfficheurService_I createOnLocalPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)
 		{
-		return new AfficheurServiceAll(affichageOptions, meteoServiceRemote, true);
+		return new AfficheurServiceAll(affichageOptions, meteoServiceRemote, false);
 		}
 
 	@Override public AfficheurService_I createOnCentralPC(AffichageOptions affichageOptions, MeteoServiceWrapper_I meteoServiceRemote)

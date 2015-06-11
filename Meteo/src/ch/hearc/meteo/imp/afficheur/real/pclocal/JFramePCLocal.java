@@ -16,12 +16,11 @@ public class JFramePCLocal extends JFrame
 
 	public JFramePCLocal()
 		{
-		meteoPortDetectionService= new MeteoPortDetectionService();
+		meteoPortDetectionService = new MeteoPortDetectionService();
 		geometry();
 		control();
 		appearance();
 		}
-
 
 	/*------------------------------------------------------------------*\
 	|*							Methodes Private						*|
@@ -47,6 +46,11 @@ public class JFramePCLocal extends JFrame
 		setVisible(true); // last!
 		this.setSize(new Dimension(200, 100));
 		this.setPreferredSize(new Dimension(200, 100));
+		}
+
+	public String getPortName()
+		{
+		return choice.getPortName();
 		}
 
 	/*------------------------------------------------------------------*\
