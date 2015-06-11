@@ -1,10 +1,16 @@
 
 package ch.hearc.meteo.imp.reseau;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 import ch.hearc.meteo.imp.afficheur.simulateur.AfficheurSimulateurFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
@@ -116,9 +122,48 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 	 */
 	private static RmiURL rmiUrl()
 		{
+		InetAddress address=loadPreference();
 		String id = IdTools.createID(PREFIXE);
 
-		return new RmiURL(id);
+		return new RmiURL(id,address);
+		}
+
+	private static InetAddress loadPreference()
+		{
+		Properties properties = new Properties();
+
+		if (FILE_PROPERTIES.exists())
+			{
+			try
+				{
+				FileInputStream fis = new FileInputStream(FILE_PROPERTIES);
+				BufferedInputStream bis = new BufferedInputStream(fis);
+
+				properties.load(bis);
+
+				bis.close();
+				fis.close();
+				}
+			catch (Exception e)
+				{
+				System.err.println("Impossible de loader les préferences");
+				}
+			}
+
+		String s = properties.getProperty("rmiCentral", "127.0.0.1");
+		System.out.println(s);
+		InetAddress address = null;
+		try
+			{
+			address = InetAddress.getByName(s);
+			}
+		catch (UnknownHostException e)
+			{
+			System.err.println("IP dans le fichier ipCentral.txt invalide.");
+			}
+
+		return address;
+
 		}
 
 	/*------------------------------------------------------------------*\
@@ -139,6 +184,7 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 
 	public static final String RMI_ID = PREFIXE;
 	public static final int RMI_LOCAL_PORT = RmiTools.PORT_RMI_DEFAUT;
-	public static final RmiURL RMI_URL = new RmiURL(RMI_ID, RMI_LOCAL_PORT);
+	public static final RmiURL RMI_URL = rmiUrl();
+	private static final File FILE_PROPERTIES = new File("./Settings/ipCentral.txt");
 
 	}
