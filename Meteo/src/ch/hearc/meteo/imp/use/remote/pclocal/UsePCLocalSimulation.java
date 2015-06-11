@@ -4,7 +4,7 @@ package ch.hearc.meteo.imp.use.remote.pclocal;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
-import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
+import ch.hearc.meteo.imp.afficheur.simulateur.AfficheurSimulateurFactory;
 import ch.hearc.meteo.imp.com.simulateur.MeteoServiceSimulatorFactory;
 import ch.hearc.meteo.imp.reseau.RemoteAfficheurCreator;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
@@ -50,7 +50,7 @@ public class UsePCLocalSimulation
 		// Création du service d'affichage local
 		String titre = RmiTools.getLocalHost() + " " + meteoService.getPort();
 		AffichageOptions affichageOption = new AffichageOptions(3, titre);
-		AfficheurService_I afficheurService = new AfficheurFactory().createOnLocalPC(affichageOption, meteoServiceWrapper);
+		AfficheurService_I afficheurService = new AfficheurSimulateurFactory().createOnLocalPC(affichageOption, meteoServiceWrapper);
 		AfficheurServiceWrapper afficheurServiceWrapper = new AfficheurServiceWrapper(afficheurService);
 
 		// Réseau

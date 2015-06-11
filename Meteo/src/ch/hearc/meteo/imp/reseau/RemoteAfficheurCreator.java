@@ -8,7 +8,7 @@ import java.rmi.RemoteException;
 import java.util.HashMap;
 import java.util.Map;
 
-import ch.hearc.meteo.imp.afficheur.real.afficheur.AfficheurFactory;
+import ch.hearc.meteo.imp.afficheur.simulateur.AfficheurSimulateurFactory;
 import ch.hearc.meteo.spec.afficheur.AffichageOptions;
 import ch.hearc.meteo.spec.afficheur.AfficheurService_I;
 import ch.hearc.meteo.spec.reseau.RemoteAfficheurCreator_I;
@@ -93,7 +93,7 @@ public class RemoteAfficheurCreator implements RemoteAfficheurCreator_I
 		{
 		//done
 		//JFramePCCentrale.addStation(affichageOptions, (MeteoService_I)meteoServiceRemote);
-		return (new AfficheurFactory()).createOnCentralPC(affichageOptions, meteoServiceRemote);
+		return (new AfficheurSimulateurFactory()).createOnCentralPC(affichageOptions, meteoServiceRemote);
 		}
 
 	private void server() throws RemoteException
